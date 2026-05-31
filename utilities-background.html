@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Tutorial - Complete Utilities Guide</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bs-body-bg: #0B1220;
+            --bs-body-color: #E6EEF3;
+            --bs-primary: #7C3AED; 
+            --bs-secondary: #06B6D4; 
+            --bs-success: #10B981;
+            --bs-danger: #EF4444;
+            --bs-warning: #F59E0B;
+            --bs-info: #3B82F6;
+            --bs-surface: #0F1724; 
+            --bs-card: #111827;
+            --bs-code-bg: #071026;  
+            --bs-border-color: rgba(255,255,255,0.06);
+            --bs-box-shadow: 0 0.5rem 1rem rgba(2,6,23,0.6);
+            --bs-border-radius: 0.625rem; 
+        }
+
+        html{
+            scroll-padding-top: 90px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            line-height: 1.6;
+        }
+
+        .btn-primary, .bg-primary, .text-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; color: white !important; }
+        .text-accent { color: var(--bs-secondary) !important; }
+        
+        .tutorial-container {
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 992px) {
+            .sidebar-fixed {
+                width: 250px;
+                height: calc(100vh - 70px); 
+                position: fixed;
+                top: 70px; 
+                overflow-y: auto;
+                background-color: var(--bs-card);
+                border-right: 1px solid var(--bs-border-color);
+            }
+            .content-area {
+                margin-left: 250px;
+            }
+        }
+        
+        .info-cont, .example-box, .try-it-box, .warning-box, .task-box, .summary-box, .analogy-box {
+            background-color: var(--bs-card);
+            box-shadow: var(--bs-box-shadow);
+            border-radius: var(--bs-border-radius);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-cont:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.8);
+        }
+
+        .info-cont { 
+            border-left: 4px solid var(--bs-primary); 
+        }
+        .warning-box {
+             border-left: 4px solid var(--bs-danger); background-color: rgba(239, 68, 68, 0.1); 
+            }
+        .task-box { 
+            border-left: 4px solid var(--bs-success); background-color: rgba(16, 185, 129, 0.1); 
+        }
+        .summary-box {
+             border-left: 4px solid var(--bs-secondary); background-color: rgba(6, 182, 212, 0.1); 
+            }
+        .analogy-box {
+             border-left: 4px solid #00BCD4; background-color: rgba(0, 188, 212, 0.1);
+             }
+
+        .code-example, .code-editor, .output-box {
+            background-color: var(--bs-code-bg);
+            border-color: var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
+        }
+        .code-example pre, .code-example code {
+            color: var(--bs-body-color);
+        }
+        
+        .content table {
+            border-collapse: collapse;
+        }
+        .content th {
+            background-color: var(--bs-surface);
+            color: var(--bs-secondary);
+        }
+        .content td {
+            border-bottom: 1px solid var(--bs-border-color);
+        }
+        .content tbody tr:hover {
+            background-color: rgba(255,255,255,0.04);
+        }
+        
+        .aside-link:hover {
+            color: var(--bs-primary) !important;
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #2c3e50; 
+        }
+        
+        .sidebar-fixed::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .dropdown-toggle::after {
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown-toggle[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            background-color: var(--bs-card);
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .dropdown-item {
+            color: var(--bs-body-color);
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: var(--bs-primary);
+        }
+        
+        .active-topic {
+            background-color: rgba(124, 58, 237, 0.2) !important;
+            color: var(--bs-primary) !important;
+        }
+        
+        /* Utility Demo Styles */
+        .utility-demo {
+            background-color: var(--bs-surface);
+            border-radius: var(--bs-border-radius);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .demo-box {
+            padding: 1rem;
+            border: 1px solid var(--bs-border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-item {
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            display: inline-block;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .size-demo {
+            height: 40px;
+            width: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.25rem;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .spacing-demo {
+            background-color: rgba(124, 58, 237, 0.2);
+            border: 1px dashed var(--bs-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .border-demo {
+            height: 50px;
+            width: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.25rem;
+            background-color: var(--bs-surface);
+        }
+        
+        .shadow-demo {
+            height: 60px;
+            width: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem;
+            background-color: var(--bs-surface);
+        }
+        
+        .utility-anchor {
+            scroll-margin-top: 100px;
+            padding-top: 20px;
+        }
+        
+        .sticky-utility-nav {
+            position: sticky;
+            top: 70px;
+            z-index: 1000;
+            background-color: var(--bs-card);
+            padding: 1rem;
+            border-bottom: 1px solid var(--bs-border-color);
+        }
+        
+        .utility-nav-link {
+            color: var(--bs-body-color);
+            text-decoration: none;
+            padding: 0.25rem 0.5rem;
+            margin: 0 0.25rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .utility-nav-link:hover,
+        .utility-nav-link.active {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: var(--bs-primary);
+        }
+        
+        .quick-navigation {
+            position: fixed;
+            right: 20px;
+            top: 120px;
+            background-color: var(--bs-card);
+            border-radius: var(--bs-border-radius);
+            padding: 1rem;
+            width: 200px;
+            border: 1px solid var(--bs-border-color);
+            z-index: 1000;
+        }
+        
+        .quick-navigation a {
+            display: block;
+            color: var(--bs-body-color);
+            text-decoration: none;
+            padding: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .quick-navigation a:hover {
+            color: var(--bs-primary);
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <header class="navbar navbar-expand-lg sticky-top shadow-lg p-3" style="background-color: var(--bs-surface);">
+        <div class="container-fluid">
+            <a class="navbar-brand text-accent fw-bold fs-4" href="#">DevHub</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user text-accent me-2 fs-5"></i>
+                    <button class="btn btn-primary btn-sm rounded-3 fw-bold">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="tutorial-container">
+        <aside class="d-none d-lg-block p-4 sidebar-fixed" style="background-color: var(--bs-card);">
+            <div>
+                <h3 class="text-accent text-center mb-4">UTILITIES GUIDE</h3>
+                <hr class="border-secondary">
+                <ul class="list-unstyled"> 
+                    <li class="mb-2"><a href="#introduction" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Introduction</a></li>
+                    <li class="mb-2"><a href="#spacing" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spacing</a></li>
+                    <li class="mb-2"><a href="#display" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Display</a></li>
+                    <li class="mb-2"><a href="#flex" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Flex</a></li>
+                    <li class="mb-2"><a href="#text" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Text</a></li>
+                    <li class="mb-2"><a href="#colors" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Colors</a></li>
+                    <li class="mb-2"><a href="#sizing" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Sizing</a></li>
+                    <li class="mb-2"><a href="#borders" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Borders</a></li>
+                    <li class="mb-2"><a href="#shadows" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Shadows</a></li>
+                    <li class="mb-2"><a href="#position" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Position</a></li>
+                    <li class="mb-2"><a href="#interactions" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Interactions</a></li>
+                    <li class="mb-2"><a href="#misc" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Miscellaneous</a></li>
+                    <li class="mb-2"><a href="#responsive" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Responsive</a></li>
+                    <li class="mb-2"><a href="#cheatsheet" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Cheat Sheet</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Quick Navigation -->
+        <div class="d-none d-xl-block quick-navigation">
+            <h6 class="text-accent mb-2">Quick Jump</h6>
+            <a href="#introduction">Introduction</a>
+            <a href="#spacing">Spacing</a>
+            <a href="#display">Display</a>
+            <a href="#flex">Flex</a>
+            <a href="#text">Text</a>
+            <a href="#colors">Colors</a>
+            <a href="#sizing">Sizing</a>
+            <a href="#borders">Borders</a>
+            <a href="#shadows">Shadows</a>
+            <a href="#cheatsheet">Cheat Sheet</a>
+        </div>
+
+        <section class="content-area p-4 ml-30 col-12 col-lg-9">
+            <h1 class="text-accent text-center mb-4">COMPLETE BOOTSTRAP UTILITIES GUIDE</h1>
+            <hr class="border-secondary mb-5">
+            
+            <!-- Introduction -->
+            <div id="introduction" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Introduction to Bootstrap Utilities</h2>
+                    <p class="mb-3">Bootstrap utilities are single-purpose CSS classes that allow you to style elements directly in your HTML without writing custom CSS. They follow a consistent naming convention and work responsively across all breakpoints.</p>
+                    
+                    <div class="alert alert-primary p-3 border-0 rounded-3" style="background-color: rgba(124, 58, 237, 0.1); color: white;">
+                        <i class="fas fa-lightbulb me-2"></i><strong>Why Use Utilities?</strong> Utilities enable rapid prototyping, reduce CSS bloat, ensure consistency, and make your code more maintainable.
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Utility Class Structure</h4>
+                    <p>Most utilities follow this pattern: <code>{property}{sides}-{size}</code> or <code>{property}-{value}</code></p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="code-example p-3">
+                                <h6 class="text-accent">Examples:</h6>
+                                <pre><code class="text-white">.mt-3    /* margin-top: 1rem */
+.pb-4    /* padding-bottom: 1.5rem */
+.text-center
+.bg-primary
+.d-flex
+.border
+.shadow
+.w-50    /* width: 50% */
+.fs-4    /* font-size: 1.5rem */</code></pre>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="code-example p-3">
+                                <h6 class="text-accent">Breakpoint Syntax:</h6>
+                                <pre><code class="text-white">/* Small devices (≥576px) */
+.sm-{utility}
+
+/* Medium devices (≥768px) */
+.md-{utility}
+
+/* Large devices (≥992px) */
+.lg-{utility}
+
+/* Extra large (≥1200px) */
+.xl-{utility}
+
+/* Extra extra large (≥1400px) */
+.xxl-{utility}
+
+/* Example: */
+.d-none .d-md-block</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spacing Utilities -->
+            <div id="spacing" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Spacing Utilities</h2>
+                    <p>Control margin and padding with shorthand classes. Values range from 0-5 and auto.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="text-white">Margin Classes</h4>
+                            <table class="table table-dark table-hover text-white">
+                                <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Size</th>
+                                        <th>Value (rem)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>.m-0</code></td><td>0</td><td>0</td></tr>
+                                    <tr><td><code>.m-1</code></td><td>1</td><td>0.25rem</td></tr>
+                                    <tr><td><code>.m-2</code></td><td>2</td><td>0.5rem</td></tr>
+                                    <tr><td><code>.m-3</code></td><td>3</td><td>1rem</td></tr>
+                                    <tr><td><code>.m-4</code></td><td>4</td><td>1.5rem</td></tr>
+                                    <tr><td><code>.m-5</code></td><td>5</td><td>3rem</td></tr>
+                                    <tr><td><code>.m-auto</code></td><td>auto</td><td>auto</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="text-white">Padding Classes</h4>
+                            <table class="table table-dark table-hover text-white">
+                                <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Size</th>
+                                        <th>Value (rem)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>.p-0</code></td><td>0</td><td>0</td></tr>
+                                    <tr><td><code>.p-1</code></td><td>1</td><td>0.25rem</td></tr>
+                                    <tr><td><code>.p-2</code></td><td>2</td><td>0.5rem</td></tr>
+                                    <tr><td><code>.p-3</code></td><td>3</td><td>1rem</td></tr>
+                                    <tr><td><code>.p-4</code></td><td>4</td><td>1.5rem</td></tr>
+                                    <tr><td><code>.p-5</code></td><td>5</td><td>3rem</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Directional Classes</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-primary m-1">.m-1 (all sides)</div>
+                        <div class="demo-item bg-primary mt-2">.mt-2 (top)</div>
+                        <div class="demo-item bg-primary mb-2">.mb-2 (bottom)</div>
+                        <div class="demo-item bg-primary ms-2">.ms-2 (start/left)</div>
+                        <div class="demo-item bg-primary me-2">.me-2 (end/right)</div>
+                        <div class="demo-item bg-primary mx-2">.mx-2 (left & right)</div>
+                        <div class="demo-item bg-primary my-2">.my-2 (top & bottom)</div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Spacing Examples --&gt;
+&lt;div class="m-3 p-4"&gt;Margin & padding all sides&lt;/div&gt;
+&lt;div class="mt-2 mb-4"&gt;Top margin 2, bottom margin 4&lt;/div&gt;
+&lt;div class="px-3 py-2"&gt;Horizontal & vertical padding&lt;/div&gt;
+&lt;div class="ms-auto"&gt;Auto left margin (push right)&lt;/div&gt;
+
+&lt;!-- Responsive spacing --&gt;
+&lt;div class="m-3 m-md-4 m-lg-5"&gt;Responsive margin&lt;/div&gt;
+&lt;div class="p-2 p-sm-3 p-md-4"&gt;Responsive padding&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Utilities -->
+            <div id="display" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Display Utilities</h2>
+                    <p>Control the display property of elements and their visibility.</p>
+                    
+                    <h4 class="text-white">Display Classes</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-info d-inline">.d-inline</div>
+                        <div class="demo-item bg-info d-inline">.d-inline</div>
+                        <div class="demo-item bg-info d-block mt-2">.d-block</div>
+                        <div class="demo-item bg-info d-inline-block mt-2">.d-inline-block</div>
+                        <div class="demo-item bg-info d-flex mt-2">.d-flex</div>
+                        <div class="demo-item bg-info d-grid mt-2">.d-grid</div>
+                        <div class="demo-item bg-info d-none">.d-none (hidden)</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Common Display Classes</h4>
+                    <table class="table table-dark table-hover text-white">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>CSS Value</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>.d-none</code></td><td>display: none</td><td>Hides element</td></tr>
+                            <tr><td><code>.d-inline</code></td><td>display: inline</td><td>Inline element</td></tr>
+                            <tr><td><code>.d-block</code></td><td>display: block</td><td>Block element</td></tr>
+                            <tr><td><code>.d-inline-block</code></td><td>display: inline-block</td><td>Inline-block element</td></tr>
+                            <tr><td><code>.d-flex</code></td><td>display: flex</td><td>Flex container</td></tr>
+                            <tr><td><code>.d-inline-flex</code></td><td>display: inline-flex</td><td>Inline flex container</td></tr>
+                            <tr><td><code>.d-grid</code></td><td>display: grid</td><td>Grid container</td></tr>
+                            <tr><td><code>.d-table</code></td><td>display: table</td><td>Table display</td></tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Display Examples --&gt;
+&lt;div class="d-inline"&gt;Inline element&lt;/div&gt;
+&lt;span class="d-block"&gt;Span as block&lt;/span&gt;
+
+&lt;!-- Responsive display --&gt;
+&lt;div class="d-none d-md-block"&gt;Hidden on mobile&lt;/div&gt;
+&lt;div class="d-block d-md-none"&gt;Visible only on mobile&lt;/div&gt;
+
+&lt;!-- Print display --&gt;
+&lt;div class="d-print-none"&gt;Hide when printing&lt;/div&gt;
+&lt;div class="d-none d-print-block"&gt;Show only when printing&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flex Utilities -->
+            <div id="flex" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Flex Utilities</h2>
+                    <p>Complete set of utilities for Flexbox layout.</p>
+                    
+                    <h4 class="text-white">Flex Container Classes</h4>
+                    <div class="utility-demo">
+                        <div class="d-flex border p-2 mb-2">
+                            <div class="demo-item bg-danger me-1">.d-flex</div>
+                            <div class="demo-item bg-danger">Flex container</div>
+                        </div>
+                        
+                        <div class="d-flex flex-row border p-2 mb-2">
+                            <div class="demo-item bg-warning me-1">.flex-row</div>
+                            <div class="demo-item bg-warning">Horizontal (default)</div>
+                        </div>
+                        
+                        <div class="d-flex flex-column border p-2" style="height: 100px;">
+                            <div class="demo-item bg-success mb-1">.flex-column</div>
+                            <div class="demo-item bg-success">Vertical layout</div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Flex Alignment</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-accent">Justify Content</h6>
+                            <div class="d-flex justify-content-start border p-2 mb-2">
+                                <div class="demo-item bg-primary">.justify-content-start</div>
+                            </div>
+                            <div class="d-flex justify-content-center border p-2 mb-2">
+                                <div class="demo-item bg-primary">.justify-content-center</div>
+                            </div>
+                            <div class="d-flex justify-content-end border p-2 mb-2">
+                                <div class="demo-item bg-primary">.justify-content-end</div>
+                            </div>
+                            <div class="d-flex justify-content-between border p-2 mb-2">
+                                <div class="demo-item bg-primary">Left</div>
+                                <div class="demo-item bg-primary">Right</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-accent">Align Items</h6>
+                            <div class="d-flex align-items-start border p-2 mb-2" style="height: 70px;">
+                                <div class="demo-item bg-success">.align-items-start</div>
+                            </div>
+                            <div class="d-flex align-items-center border p-2 mb-2" style="height: 70px;">
+                                <div class="demo-item bg-success">.align-items-center</div>
+                            </div>
+                            <div class="d-flex align-items-end border p-2 mb-2" style="height: 70px;">
+                                <div class="demo-item bg-success">.align-items-end</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Flex Item Classes</h4>
+                    <div class="utility-demo">
+                        <div class="d-flex border p-2">
+                            <div class="demo-item bg-info flex-fill">.flex-fill</div>
+                            <div class="demo-item bg-warning flex-fill">Equal width</div>
+                            <div class="demo-item bg-danger flex-fill">Fill available space</div>
+                        </div>
+                        
+                        <div class="d-flex border p-2 mt-2">
+                            <div class="demo-item bg-info">Item 1</div>
+                            <div class="demo-item bg-warning flex-grow-1">.flex-grow-1</div>
+                            <div class="demo-item bg-danger">Item 3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Flex Container --&gt;
+&lt;div class="d-flex flex-column flex-md-row"&gt;
+  &lt;div&gt;Responsive flex direction&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Alignment --&gt;
+&lt;div class="d-flex justify-content-center align-items-center"&gt;
+  &lt;div&gt;Centered both ways&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Flex Items --&gt;
+&lt;div class="d-flex"&gt;
+  &lt;div class="flex-fill"&gt;Equal width&lt;/div&gt;
+  &lt;div class="flex-grow-1"&gt;Grows to fill&lt;/div&gt;
+  &lt;div class="flex-shrink-0"&gt;Won't shrink&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Wrap --&gt;
+&lt;div class="d-flex flex-wrap"&gt;
+  &lt;div class="w-50"&gt;Wrapped items&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Utilities -->
+            <div id="text" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Text Utilities</h2>
+                    <p>Control text alignment, wrapping, weight, and other typographic styles.</p>
+                    
+                    <h4 class="text-white">Text Alignment</h4>
+                    <div class="utility-demo">
+                        <p class="text-start border p-2">.text-start (left aligned)</p>
+                        <p class="text-center border p-2">.text-center (centered)</p>
+                        <p class="text-end border p-2">.text-end (right aligned)</p>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Font Weight & Style</h4>
+                    <div class="utility-demo">
+                        <p class="fw-bold">.fw-bold (font-weight: bold)</p>
+                        <p class="fw-bolder">.fw-bolder (font-weight: bolder)</p>
+                        <p class="fw-semibold">.fw-semibold (font-weight: 600)</p>
+                        <p class="fw-normal">.fw-normal (font-weight: normal)</p>
+                        <p class="fw-light">.fw-light (font-weight: light)</p>
+                        <p class="fw-lighter">.fw-lighter (font-weight: lighter)</p>
+                        <p class="fst-italic">.fst-italic (font-style: italic)</p>
+                        <p class="fst-normal">.fst-normal (font-style: normal)</p>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Font Size</h4>
+                    <div class="utility-demo">
+                        <p class="fs-1">.fs-1 (2.5rem)</p>
+                        <p class="fs-2">.fs-2 (2rem)</p>
+                        <p class="fs-3">.fs-3 (1.75rem)</p>
+                        <p class="fs-4">.fs-4 (1.5rem)</p>
+                        <p class="fs-5">.fs-5 (1.25rem)</p>
+                        <p class="fs-6">.fs-6 (1rem)</p>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Text Transform & Decoration</h4>
+                    <div class="utility-demo">
+                        <p class="text-lowercase">.text-lowercase (LOWERCASE)</p>
+                        <p class="text-uppercase">.text-uppercase (uppercase)</p>
+                        <p class="text-capitalize">.text-capitalize (capitalize first letters)</p>
+                        <p class="text-decoration-underline">.text-decoration-underline</p>
+                        <p class="text-decoration-line-through">.text-decoration-line-through</p>
+                        <p class="text-decoration-none">.text-decoration-none (removes underline)</p>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Text Wrapping & Overflow</h4>
+                    <div class="utility-demo">
+                        <div class="text-nowrap border p-2" style="width: 150px;">
+                            .text-nowrap - This text won't wrap and will overflow
+                        </div>
+                        <div class="text-wrap border p-2" style="width: 150px;">
+                            .text-wrap - This text will wrap normally
+                        </div>
+                        <div class="text-truncate border p-2" style="width: 150px;">
+                            .text-truncate - This text will be truncated with ellipsis
+                        </div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Text Alignment --&gt;
+&lt;p class="text-center text-md-start"&gt;Responsive alignment&lt;/p&gt;
+
+&lt;!-- Font Size & Weight --&gt;
+&lt;h1 class="fs-2 fw-bold"&gt;Custom heading size&lt;/h1&gt;
+&lt;p class="fs-6 fw-light"&gt;Light small text&lt;/p&gt;
+
+&lt;!-- Text Transform --&gt;
+&lt;p class="text-uppercase"&gt;uppercase text&lt;/p&gt;
+&lt;a href="#" class="text-decoration-none"&gt;Link without underline&lt;/a&gt;
+
+&lt;!-- Line Height --&gt;
+&lt;p class="lh-1"&gt;Tight line height&lt;/p&gt;
+&lt;p class="lh-lg"&gt;Loose line height&lt;/p&gt;
+
+&lt;!-- Monospace --&gt;
+&lt;p class="font-monospace"&gt;Monospace font&lt;/p&gt;
+
+&lt;!-- Reset color --&gt;
+&lt;a href="#" class="text-reset"&gt;Inherit parent color&lt;/a&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Utilities -->
+            <div id="colors" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Color Utilities</h2>
+                    <p>Set text, background, and border colors using theme colors or custom values.</p>
+                    
+                    <h4 class="text-white">Text Colors</h4>
+                    <div class="utility-demo">
+                        <p class="text-primary">.text-primary</p>
+                        <p class="text-secondary">.text-secondary</p>
+                        <p class="text-success">.text-success</p>
+                        <p class="text-danger">.text-danger</p>
+                        <p class="text-warning bg-dark">.text-warning</p>
+                        <p class="text-info">.text-info</p>
+                        <p class="text-light bg-dark">.text-light</p>
+                        <p class="text-dark bg-light">.text-dark</p>
+                        <p class="text-body">.text-body (default)</p>
+                        <p class="text-muted">.text-muted</p>
+                        <p class="text-white bg-dark">.text-white</p>
+                        <p class="text-black-50">.text-black-50</p>
+                        <p class="text-white-50 bg-dark">.text-white-50</p>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Background Colors</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-primary text-white">.bg-primary</div>
+                        <div class="demo-item bg-secondary text-white">.bg-secondary</div>
+                        <div class="demo-item bg-success text-white">.bg-success</div>
+                        <div class="demo-item bg-danger text-white">.bg-danger</div>
+                        <div class="demo-item bg-warning text-dark">.bg-warning</div>
+                        <div class="demo-item bg-info text-white">.bg-info</div>
+                        <div class="demo-item bg-light text-dark">.bg-light</div>
+                        <div class="demo-item bg-dark text-white">.bg-dark</div>
+                        <div class="demo-item bg-white text-dark">.bg-white</div>
+                        <div class="demo-item bg-transparent border">.bg-transparent</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Background Opacity</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-primary bg-opacity-100 text-white">.bg-opacity-100</div>
+                        <div class="demo-item bg-primary bg-opacity-75 text-white">.bg-opacity-75</div>
+                        <div class="demo-item bg-primary bg-opacity-50 text-white">.bg-opacity-50</div>
+                        <div class="demo-item bg-primary bg-opacity-25 text-white">.bg-opacity-25</div>
+                        <div class="demo-item bg-primary bg-opacity-10 text-white">.bg-opacity-10</div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Text Colors --&gt;
+&lt;p class="text-primary"&gt;Primary text&lt;/p&gt;
+&lt;p class="text-success"&gt;Success text&lt;/p&gt;
+&lt;a href="#" class="text-reset"&gt;Reset link color&lt;/a&gt;
+
+&lt;!-- Background Colors --&gt;
+&lt;div class="bg-primary text-white"&gt;Primary background&lt;/div&gt;
+&lt;div class="bg-success bg-gradient"&gt;Gradient background&lt;/div&gt;
+
+&lt;!-- Background Opacity --&gt;
+&lt;div class="bg-primary bg-opacity-50"&gt;50% opacity&lt;/div&gt;
+&lt;div class="bg-success bg-opacity-25"&gt;25% opacity&lt;/div&gt;
+
+&lt;!-- Gradient Backgrounds --&gt;
+&lt;div class="bg-primary bg-gradient"&gt;Primary gradient&lt;/div&gt;
+&lt;div class="bg-success bg-gradient"&gt;Success gradient&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sizing Utilities -->
+            <div id="sizing" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Sizing Utilities</h2>
+                    <p>Easily set width and height of elements with responsive classes.</p>
+                    
+                    <h4 class="text-white">Width Utilities</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-primary w-25 text-center">.w-25</div>
+                        <div class="demo-item bg-primary w-50 text-center">.w-50</div>
+                        <div class="demo-item bg-primary w-75 text-center">.w-75</div>
+                        <div class="demo-item bg-primary w-100 text-center">.w-100</div>
+                        <div class="demo-item bg-primary w-auto text-center">.w-auto</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Height Utilities</h4>
+                    <div class="utility-demo" style="height: 100px;">
+                        <div class="demo-item bg-success h-25 d-inline-block">.h-25</div>
+                        <div class="demo-item bg-success h-50 d-inline-block">.h-50</div>
+                        <div class="demo-item bg-success h-75 d-inline-block">.h-75</div>
+                        <div class="demo-item bg-success h-100 d-inline-block">.h-100</div>
+                        <div class="demo-item bg-success h-auto d-inline-block">.h-auto</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Viewport Width/Height</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-info vw-100">.vw-100 (100% viewport width)</div>
+                        <div class="demo-item bg-info vh-50 mt-2">.vh-50 (50% viewport height)</div>
+                        <div class="demo-item bg-info min-vw-100 mt-2">.min-vw-100</div>
+                        <div class="demo-item bg-info min-vh-100 mt-2">.min-vh-100</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Max Width/Height</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-warning mw-100" style="width: 200px;">.mw-100</div>
+                        <div class="demo-item bg-warning mh-100 mt-2" style="height: 50px;">.mh-100</div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Width --&gt;
+&lt;div class="w-25"&gt;25% width&lt;/div&gt;
+&lt;div class="w-50"&gt;50% width&lt;/div&gt;
+&lt;div class="w-75"&gt;75% width&lt;/div&gt;
+&lt;div class="w-100"&gt;100% width&lt;/div&gt;
+&lt;div class="w-auto"&gt;Auto width&lt;/div&gt;
+
+&lt;!-- Height --&gt;
+&lt;div class="h-25" style="height: 100px;"&gt;25% height&lt;/div&gt;
+&lt;div class="h-50" style="height: 100px;"&gt;50% height&lt;/div&gt;
+
+&lt;!-- Viewport Sizing --&gt;
+&lt;div class="min-vh-100"&gt;Minimum 100vh&lt;/div&gt;
+&lt;div class="vw-100"&gt;100% viewport width&lt;/div&gt;
+
+&lt;!-- Max Dimensions --&gt;
+&lt;img src="..." class="mw-100" alt="Max width 100%"&gt;
+&lt;div class="mh-100" style="height: 200px;"&gt;Max height 100%&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Border Utilities -->
+            <div id="borders" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Border Utilities</h2>
+                    <p>Add or remove borders, change border color, width, and radius.</p>
+                    
+                    <h4 class="text-white">Border Addition/Removal</h4>
+                    <div class="utility-demo">
+                        <div class="border-demo border">.border</div>
+                        <div class="border-demo border-top">.border-top</div>
+                        <div class="border-demo border-end">.border-end</div>
+                        <div class="border-demo border-bottom">.border-bottom</div>
+                        <div class="border-demo border-start">.border-start</div>
+                        <div class="border-demo border-0">.border-0</div>
+                        <div class="border-demo border-top-0">.border-top-0</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Border Color</h4>
+                    <div class="utility-demo">
+                        <div class="border-demo border border-primary">.border-primary</div>
+                        <div class="border-demo border border-secondary">.border-secondary</div>
+                        <div class="border-demo border border-success">.border-success</div>
+                        <div class="border-demo border border-danger">.border-danger</div>
+                        <div class="border-demo border border-warning">.border-warning</div>
+                        <div class="border-demo border border-info">.border-info</div>
+                        <div class="border-demo border border-light">.border-light</div>
+                        <div class="border-demo border border-dark">.border-dark</div>
+                        <div class="border-demo border border-white">.border-white</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Border Width</h4>
+                    <div class="utility-demo">
+                        <div class="border-demo border border-1">.border-1</div>
+                        <div class="border-demo border border-2">.border-2</div>
+                        <div class="border-demo border border-3">.border-3</div>
+                        <div class="border-demo border border-4">.border-4</div>
+                        <div class="border-demo border border-5">.border-5</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Border Radius</h4>
+                    <div class="utility-demo">
+                        <div class="border-demo border rounded">.rounded</div>
+                        <div class="border-demo border rounded-top">.rounded-top</div>
+                        <div class="border-demo border rounded-end">.rounded-end</div>
+                        <div class="border-demo border rounded-bottom">.rounded-bottom</div>
+                        <div class="border-demo border rounded-start">.rounded-start</div>
+                        <div class="border-demo border rounded-circle" style="width: 80px; height: 80px;">.rounded-circle</div>
+                        <div class="border-demo border rounded-pill" style="width: 120px;">.rounded-pill</div>
+                        <div class="border-demo border rounded-0">.rounded-0</div>
+                        <div class="border-demo border rounded-1">.rounded-1</div>
+                        <div class="border-demo border rounded-2">.rounded-2</div>
+                        <div class="border-demo border rounded-3">.rounded-3</div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Basic Borders --&gt;
+&lt;div class="border"&gt;Full border&lt;/div&gt;
+&lt;div class="border-top"&gt;Top border only&lt;/div&gt;
+&lt;div class="border-0"&gt;No border&lt;/div&gt;
+
+&lt;!-- Border Color --&gt;
+&lt;div class="border border-primary"&gt;Primary border&lt;/div&gt;
+&lt;div class="border border-success"&gt;Success border&lt;/div&gt;
+
+&lt;!-- Border Width --&gt;
+&lt;div class="border border-3"&gt;3px border&lt;/div&gt;
+&lt;div class="border-top border-4"&gt;4px top border&lt;/div&gt;
+
+&lt;!-- Border Radius --&gt;
+&lt;div class="rounded"&gt;Rounded corners&lt;/div&gt;
+&lt;div class="rounded-circle"&gt;Circle&lt;/div&gt;
+&lt;div class="rounded-pill"&gt;Pill shape&lt;/div&gt;
+&lt;div class="rounded-3"&gt;3rem border radius&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shadows -->
+            <div id="shadows" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Shadow Utilities</h2>
+                    <p>Add or remove shadows from elements.</p>
+                    
+                    <div class="utility-demo">
+                        <div class="shadow-none p-3 mb-3 bg-light text-dark">.shadow-none</div>
+                        <div class="shadow-sm p-3 mb-3">.shadow-sm (small shadow)</div>
+                        <div class="shadow p-3 mb-3">.shadow (regular shadow)</div>
+                        <div class="shadow-lg p-3 mb-3">.shadow-lg (large shadow)</div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Shadow Examples --&gt;
+&lt;div class="shadow-none"&gt;No shadow&lt;/div&gt;
+&lt;div class="shadow-sm"&gt;Small shadow&lt;/div&gt;
+&lt;div class="shadow"&gt;Regular shadow&lt;/div&gt;
+&lt;div class="shadow-lg"&gt;Large shadow&lt;/div&gt;
+
+&lt;!-- On hover --&gt;
+&lt;div class="shadow-sm hover-shadow"&gt;Add shadow on hover&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Position Utilities -->
+            <div id="position" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Position Utilities</h2>
+                    <p>Control the positioning of elements.</p>
+                    
+                    <div class="utility-demo position-relative" style="height: 150px;">
+                        <div class="position-static border p-2">.position-static</div>
+                        <div class="position-relative border p-2 top-0 start-0">.position-relative</div>
+                        <div class="position-absolute border p-2 top-50 start-50">.position-absolute</div>
+                        <div class="position-fixed border p-2 bottom-0 end-0">.position-fixed</div>
+                        <div class="position-sticky border p-2 top-0">.position-sticky</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Position Values</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-dark table-hover text-white">
+                                <thead>
+                                    <tr><th>Class</th><th>Value</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>.top-0</code></td><td>top: 0</td></tr>
+                                    <tr><td><code>.top-50</code></td><td>top: 50%</td></tr>
+                                    <tr><td><code>.top-100</code></td><td>top: 100%</td></tr>
+                                    <tr><td><code>.start-0</code></td><td>left: 0</td></tr>
+                                    <tr><td><code>.start-50</code></td><td>left: 50%</td></tr>
+                                    <tr><td><code>.start-100</code></td><td>left: 100%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-dark table-hover text-white">
+                                <thead>
+                                    <tr><th>Class</th><th>Value</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>.bottom-0</code></td><td>bottom: 0</td></tr>
+                                    <tr><td><code>.bottom-50</code></td><td>bottom: 50%</td></tr>
+                                    <tr><td><code>.bottom-100</code></td><td>bottom: 100%</td></tr>
+                                    <tr><td><code>.end-0</code></td><td>right: 0</td></tr>
+                                    <tr><td><code>.end-50</code></td><td>right: 50%</td></tr>
+                                    <tr><td><code>.end-100</code></td><td>right: 100%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Translate Middle</h4>
+                    <div class="utility-demo position-relative bg-dark" style="height: 100px;">
+                        <div class="position-absolute top-50 start-50 translate-middle bg-primary p-2">
+                            .translate-middle
+                        </div>
+                        <div class="position-absolute top-50 start-0 translate-middle-y bg-success p-2">
+                            .translate-middle-y
+                        </div>
+                        <div class="position-absolute top-0 start-50 translate-middle-x bg-warning p-2">
+                            .translate-middle-x
+                        </div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Positioning --&gt;
+&lt;div class="position-static"&gt;Static positioning&lt;/div&gt;
+&lt;div class="position-relative"&gt;Relative positioning&lt;/div&gt;
+&lt;div class="position-absolute top-0 end-0"&gt;Absolute top-right&lt;/div&gt;
+&lt;div class="position-fixed bottom-0"&gt;Fixed to bottom&lt;/div&gt;
+&lt;div class="position-sticky top-0"&gt;Sticky to top&lt;/div&gt;
+
+&lt;!-- Centering with translate --&gt;
+&lt;div class="position-absolute top-50 start-50 translate-middle"&gt;
+  Centered absolutely
+&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interaction Utilities -->
+            <div id="interactions" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Interaction Utilities</h2>
+                    
+                    <h4 class="text-white">User Select</h4>
+                    <div class="utility-demo">
+                        <p class="user-select-all">.user-select-all (select all text on click)</p>
+                        <p class="user-select-auto">.user-select-auto (default browser behavior)</p>
+                        <p class="user-select-none">.user-select-none (text cannot be selected)</p>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Pointer Events</h4>
+                    <div class="utility-demo">
+                        <p><a href="#" class="pe-none" tabindex="-1" aria-disabled="true">.pe-none (no pointer events)</a></p>
+                        <p><a href="#" class="pe-auto">.pe-auto (default pointer events)</a></p>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Overflow</h4>
+                    <div class="utility-demo">
+                        <div class="overflow-auto border p-2" style="height: 100px; width: 200px;">
+                            <div style="height: 200px; width: 300px;">.overflow-auto (scrollbars when needed)</div>
+                        </div>
+                        <div class="overflow-hidden border p-2 mt-2" style="height: 100px; width: 200px;">
+                            <div style="height: 200px; width: 300px;">.overflow-hidden (content clipped)</div>
+                        </div>
+                        <div class="overflow-visible border p-2 mt-2" style="height: 100px; width: 200px;">
+                            <div style="height: 200px; width: 300px;">.overflow-visible (content not clipped)</div>
+                        </div>
+                        <div class="overflow-scroll border p-2 mt-2" style="height: 100px; width: 200px;">
+                            <div style="height: 200px; width: 300px;">.overflow-scroll (always show scrollbars)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- User Select --&gt;
+&lt;p class="user-select-all"&gt;Select all text on click&lt;/p&gt;
+&lt;p class="user-select-none"&gt;Text cannot be selected&lt;/p&gt;
+
+&lt;!-- Pointer Events --&gt;
+&lt;a href="#" class="pe-none"&gt;Non-clickable link&lt;/a&gt;
+&lt;div class="pe-auto"&gt;Clickable element&lt;/div&gt;
+
+&lt;!-- Overflow --&gt;
+&lt;div class="overflow-auto"&gt;Scroll when needed&lt;/div&gt;
+&lt;div class="overflow-hidden"&gt;Hide overflow&lt;/div&gt;
+&lt;div class="overflow-visible"&gt;Show overflow&lt;/div&gt;
+&lt;div class="overflow-scroll"&gt;Always scroll&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Miscellaneous Utilities -->
+            <div id="misc" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Miscellaneous Utilities</h2>
+                    
+                    <h4 class="text-white">Visibility</h4>
+                    <div class="utility-demo">
+                        <div class="visible">.visible (default visibility)</div>
+                        <div class="invisible">.invisible (hidden but takes space)</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Z-index</h4>
+                    <div class="utility-demo">
+                        <div class="position-relative">
+                            <div class="position-absolute top-0 start-0 bg-primary p-2 z-3">.z-3</div>
+                            <div class="position-absolute top-2 start-2 bg-success p-2 z-2">.z-2</div>
+                            <div class="position-absolute top-4 start-4 bg-warning p-2 z-1">.z-1</div>
+                            <div class="position-absolute top-6 start-6 bg-danger p-2 z-0">.z-0</div>
+                            <div class="position-absolute top-8 start-8 bg-info p-2 z-n1">.z-n1</div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Opacity</h4>
+                    <div class="utility-demo">
+                        <div class="demo-item bg-primary opacity-100">.opacity-100</div>
+                        <div class="demo-item bg-primary opacity-75">.opacity-75</div>
+                        <div class="demo-item bg-primary opacity-50">.opacity-50</div>
+                        <div class="demo-item bg-primary opacity-25">.opacity-25</div>
+                        <div class="demo-item bg-primary opacity-0">.opacity-0</div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Object Fit</h4>
+                    <div class="utility-demo">
+                        <div class="border" style="width: 100px; height: 100px;">
+                            <div class="bg-info w-100 h-100 object-fit-contain">.object-fit-contain</div>
+                        </div>
+                        <div class="border" style="width: 100px; height: 100px;">
+                            <div class="bg-success w-100 h-100 object-fit-cover">.object-fit-cover</div>
+                        </div>
+                        <div class="border" style="width: 100px; height: 100px;">
+                            <div class="bg-warning w-100 h-100 object-fit-fill">.object-fit-fill</div>
+                        </div>
+                        <div class="border" style="width: 100px; height: 100px;">
+                            <div class="bg-danger w-100 h-100 object-fit-scale-down">.object-fit-scale-down</div>
+                        </div>
+                        <div class="border" style="width: 100px; height: 100px;">
+                            <div class="bg-primary w-100 h-100 object-fit-none">.object-fit-none</div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Visibility --&gt;
+&lt;div class="visible"&gt;Visible&lt;/div&gt;
+&lt;div class="invisible"&gt;Invisible but takes space&lt;/div&gt;
+
+&lt;!-- Z-index --&gt;
+&lt;div class="z-3"&gt;Z-index 3&lt;/div&gt;
+&lt;div class="z-n1"&gt;Z-index -1&lt;/div&gt;
+
+&lt;!-- Opacity --&gt;
+&lt;div class="opacity-100"&gt;100% opacity&lt;/div&gt;
+&lt;div class="opacity-50"&gt;50% opacity&lt;/div&gt;
+&lt;div class="opacity-0"&gt;0% opacity&lt;/div&gt;
+
+&lt;!-- Object Fit --&gt;
+&lt;img src="..." class="object-fit-cover" alt="Cover image"&gt;
+&lt;div class="object-fit-contain"&gt;Contain content&lt;/div&gt;
+
+&lt;!-- Float --&gt;
+&lt;div class="float-start"&gt;Float left&lt;/div&gt;
+&lt;div class="float-end"&gt;Float right&lt;/div&gt;
+&lt;div class="float-none"&gt;No float&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Responsive Utilities -->
+            <div id="responsive" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Responsive Utilities</h2>
+                    <p>Most Bootstrap utilities are responsive. Add breakpoint abbreviations to make them conditional.</p>
+                    
+                    <h4 class="text-white">Breakpoint Prefixes</h4>
+                    <table class="table table-dark table-hover text-white">
+                        <thead>
+                            <tr>
+                                <th>Breakpoint</th>
+                                <th>Class Prefix</th>
+                                <th>Dimensions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Extra small</td><td><em>None</em></td><td>&lt;576px</td></tr>
+                            <tr><td>Small</td><td><code>.sm-</code></td><td>≥576px</td></tr>
+                            <tr><td>Medium</td><td><code>.md-</code></td><td>≥768px</td></tr>
+                            <tr><td>Large</td><td><code>.lg-</code></td><td>≥992px</td></tr>
+                            <tr><td>Extra large</td><td><code>.xl-</code></td><td>≥1200px</td></tr>
+                            <tr><td>Extra extra large</td><td><code>.xxl-</code></td><td>≥1400px</td></tr>
+                        </tbody>
+                    </table>
+                    
+                    <h4 class="text-white mt-4">Responsive Examples</h4>
+                    <div class="utility-demo">
+                        <div class="d-block d-md-none bg-danger p-2">Visible only on mobile</div>
+                        <div class="d-none d-md-block bg-success p-2">Visible only on desktop</div>
+                        
+                        <div class="text-center text-md-start p-2 border">
+                            Center on mobile, left align on desktop
+                        </div>
+                        
+                        <div class="w-100 w-md-50 w-lg-25 p-2 border">
+                            Full width on mobile, 50% on tablet, 25% on desktop
+                        </div>
+                        
+                        <div class="m-2 m-md-4 m-lg-5 p-2 border">
+                            Responsive margins
+                        </div>
+                    </div>
+                    
+                    <div class="code-example p-3 mt-4">
+                        <pre><code class="text-white">&lt;!-- Responsive Display --&gt;
+&lt;div class="d-none d-md-block"&gt;Hidden on mobile, visible on desktop&lt;/div&gt;
+&lt;div class="d-block d-md-none"&gt;Visible on mobile, hidden on desktop&lt;/div&gt;
+
+&lt;!-- Responsive Text --&gt;
+&lt;p class="text-center text-md-start"&gt;
+  Centered on mobile, left aligned on desktop
+&lt;/p&gt;
+
+&lt;!-- Responsive Spacing --&gt;
+&lt;div class="m-3 m-md-4 m-lg-5"&gt;Responsive margin&lt;/div&gt;
+&lt;div class="p-2 p-sm-3 p-md-4"&gt;Responsive padding&lt;/div&gt;
+
+&lt;!-- Responsive Flex --&gt;
+&lt;div class="d-flex flex-column flex-md-row"&gt;
+  &lt;div&gt;Column on mobile, row on desktop&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Responsive Sizing --&gt;
+&lt;div class="w-100 w-md-50 w-lg-25"&gt;Responsive width&lt;/div&gt;
+
+&lt;!-- Hide at specific breakpoints --&gt;
+&lt;div class="d-lg-none"&gt;Hidden on large screens&lt;/div&gt;
+&lt;div class="d-none d-lg-block"&gt;Visible only on large screens&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cheat Sheet -->
+            <div id="cheatsheet" class="utility-anchor">
+                <div class="info-cont p-4 mb-4">
+                    <h2 class="text-accent fs-3">▶ Quick Reference Cheat Sheet</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="text-white">Spacing</h4>
+                            <ul class="text-white">
+                                <li><code>.m{t|r|b|l|x|y}-{0|1|2|3|4|5|auto}</code></li>
+                                <li><code>.p{t|r|b|l|x|y}-{0|1|2|3|4|5}</code></li>
+                            </ul>
+                            
+                            <h4 class="text-white mt-3">Display</h4>
+                            <ul class="text-white">
+                                <li><code>.d-{none|inline|block|flex|grid}</code></li>
+                                <li><code>.d-{print}-{value}</code></li>
+                            </ul>
+                            
+                            <h4 class="text-white mt-3">Flex</h4>
+                            <ul class="text-white">
+                                <li><code>.flex-{row|column|wrap|nowrap}</code></li>
+                                <li><code>.justify-content-{start|center|end|between|around}</code></li>
+                                <li><code>.align-items-{start|center|end|baseline|stretch}</code></li>
+                                <li><code>.flex-{grow|shrink}-{0|1}</code></li>
+                                <li><code>.order-{0-5|first|last}</code></li>
+                            </ul>
+                            
+                            <h4 class="text-white mt-3">Text</h4>
+                            <ul class="text-white">
+                                <li><code>.text-{start|center|end|wrap|nowrap|break}</code></li>
+                                <li><code>.fs-{1-6}</code></li>
+                                <li><code>.fw-{bold|bolder|semibold|normal|light|lighter}</code></li>
+                                <li><code>.fst-{italic|normal}</code></li>
+                                <li><code>.text-{lowercase|uppercase|capitalize}</code></li>
+                                <li><code>.text-decoration-{underline|line-through|none}</code></li>
+                                <li><code>.lh-{1|sm|base|lg}</code></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h4 class="text-white">Colors</h4>
+                            <ul class="text-white">
+                                <li><code>.text-{primary|secondary|success|danger|warning|info|light|dark|body|muted|white|black}</code></li>
+                                <li><code>.bg-{primary|secondary|success|danger|warning|info|light|dark|white|transparent}</code></li>
+                                <li><code>.bg-opacity-{10|25|50|75|100}</code></li>
+                                <li><code>.bg-gradient</code></li>
+                            </ul>
+                            
+                            <h4 class="text-white mt-3">Sizing</h4>
+                            <ul class="text-white">
+                                <li><code>.w-{25|50|75|100|auto}</code></li>
+                                <li><code>.h-{25|50|75|100|auto}</code></li>
+                                <li><code>.mw-{100}</code>, <code>.mh-{100}</code></li>
+                                <li><code>.vw-{100}</code>, <code>.vh-{100}</code></li>
+                                <li><code>.min-vw-{100}</code>, <code>.min-vh-{100}</code></li>
+                            </ul>
+                            
+                            <h4 class="text-white mt-3">Borders</h4>
+                            <ul class="text-white">
+                                <li><code>.border</code>, <code>.border-{top|end|bottom|start|0}</code></li>
+                                <li><code>.border-{primary|secondary|success|danger|warning|info|light|dark|white}</code></li>
+                                <li><code>.border-{1-5}</code></li>
+                                <li><code>.rounded</code>, <code>.rounded-{top|end|bottom|start|circle|pill|0-3}</code></li>
+                            </ul>
+                            
+                            <h4 class="text-white mt-3">Position & Shadows</h4>
+                            <ul class="text-white">
+                                <li><code>.position-{static|relative|absolute|fixed|sticky}</code></li>
+                                <li><code>.{top|start|bottom|end}-{0|50|100}</code></li>
+                                <li><code>.translate-{middle|middle-x|middle-y}</code></li>
+                                <li><code>.shadow-{none|sm|lg}</code></li>
+                                <li><code>.z-{n1|0|1|2|3|4|5}</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info p-3 border-0 rounded-3 mt-4" style="background-color: rgba(6, 182, 212, 0.1); color: white;">
+                        <i class="fas fa-lightbulb me-2"></i><strong>Remember:</strong> Add responsive prefixes to any utility class: <code>.{sm|md|lg|xl|xxl}-{utility}</code>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="summary-box p-4 mt-5">
+                <h3 class="text-accent fs-4">Utility-First Development Benefits</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5 class="text-white"><i class="fas fa-bolt text-warning me-2"></i> Rapid Development</h5>
+                        <p class="text-muted">Style directly in HTML without switching to CSS files.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="text-white"><i class="fas fa-code text-info me-2"></i> Consistent Design</h5>
+                        <p class="text-muted">Limited design choices create visual consistency.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="text-white"><i class="fas fa-weight text-success me-2"></i> Reduced CSS</h5>
+                        <p class="text-muted">Smaller CSS bundle sizes and better performance.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="helpers-stack.html" class="btn btn-outline-primary">Previous: Stack Helper</a>
+                <a href="utilities-background.html" class="btn btn-primary">Next: Background Utilities (Detail)</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-5 pt-4" style="background-color: var(--bs-surface); color: var(--bs-body-color);">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 align-items-center mb-4 g-4">
+                
+                <div class="col text-center text-md-start">
+                    <div class="text-accent fw-bold fs-4">DevHub</div>
+                    <p class="text-muted mb-0">Learn • Code • Create</p>
+                </div>
+                
+                <div class="col text-center">
+                    <p class="mb-1">Created with ❤️ by <strong class="text-accent">Abhi Borude</strong></p>
+                    <p class="text-muted mb-0">&copy; 2024 DevHub Tutorials. All rights reserved.</p>
+                </div>
+                
+                <div class="col">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-3 border-top border-secondary-subtle">
+                <p class="text-muted mb-0">Made possible by HTML, CSS, and Bootstrap</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Update active nav on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.utility-anchor');
+            const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if(scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                    document.querySelectorAll('.aside-link').forEach(link => {
+                        link.classList.remove('active-topic');
+                        if(link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active-topic');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Copy code examples
+        document.querySelectorAll('.code-example pre').forEach(pre => {
+            pre.addEventListener('click', function() {
+                const code = this.textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = 'Copied to clipboard!';
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 1500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

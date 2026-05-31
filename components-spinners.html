@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Tutorial - Spinners</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bs-body-bg: #0B1220;
+            --bs-body-color: #E6EEF3;
+            --bs-primary: #7C3AED; 
+            --bs-secondary: #06B6D4; 
+            --bs-success: #10B981;
+            --bs-danger: #EF4444;
+            --bs-surface: #0F1724; 
+            --bs-card: #111827;
+            --bs-code-bg: #071026;  
+            --bs-border-color: rgba(255,255,255,0.06);
+            --bs-box-shadow: 0 0.5rem 1rem rgba(2,6,23,0.6);
+            --bs-border-radius: 0.625rem; 
+        }
+
+        html{
+            scroll-padding-top: 90px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            line-height: 1.6;
+        }
+
+        .btn-primary, .bg-primary, .text-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; color: white !important; }
+        .text-accent { color: var(--bs-secondary) !important; }
+        
+        .tutorial-container {
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 992px) {
+            .sidebar-fixed {
+                width: 250px;
+                height: calc(100vh - 70px); 
+                position: fixed;
+                top: 70px; 
+                overflow-y: auto;
+                background-color: var(--bs-card);
+                border-right: 1px solid var(--bs-border-color);
+            }
+            .content-area {
+                margin-left: 250px;
+            }
+        }
+        
+        .info-cont, .example-box, .try-it-box, .warning-box, .task-box, .summary-box, .analogy-box {
+            background-color: var(--bs-card);
+            box-shadow: var(--bs-box-shadow);
+            border-radius: var(--bs-border-radius);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-cont:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.8);
+        }
+
+        .info-cont { 
+            border-left: 4px solid var(--bs-primary); 
+        }
+        .warning-box {
+             border-left: 4px solid var(--bs-danger); background-color: rgba(239, 68, 68, 0.1); 
+            }
+        .task-box { 
+            border-left: 4px solid var(--bs-success); background-color: rgba(16, 185, 129, 0.1); 
+        }
+        .summary-box {
+             border-left: 4px solid var(--bs-secondary); background-color: rgba(6, 182, 212, 0.1); 
+            }
+        .analogy-box {
+             border-left: 4px solid #00BCD4; background-color: rgba(0, 188, 212, 0.1);
+             }
+
+        .code-example, .code-editor, .output-box {
+            background-color: var(--bs-code-bg);
+            border-color: var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
+        }
+        .code-editor {
+             min-height: 150px;
+             font-family: 'Courier New', monospace;
+             color: var(--bs-body-color);
+        }
+        .code-example pre, .code-example code {
+            color: var(--bs-body-color);
+        }
+        
+        .content table {
+            border-collapse: collapse;
+        }
+        .content th {
+            background-color: var(--bs-surface);
+            color: var(--bs-secondary);
+        }
+        .content td {
+            border-bottom: 1px solid var(--bs-border-color);
+        }
+        .content tbody tr:hover {
+            background-color: rgba(255,255,255,0.04);
+        }
+        
+        .aside-link:hover {
+            color: var(--bs-primary) !important;
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #2c3e50; 
+        }
+        
+        .sidebar-fixed::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .dropdown-toggle::after {
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown-toggle[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            background-color: var(--bs-card);
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .dropdown-item {
+            color: var(--bs-body-color);
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: var(--bs-primary);
+        }
+        
+        .active-topic {
+            background-color: rgba(124, 58, 237, 0.2) !important;
+            color: var(--bs-primary) !important;
+        }
+        
+        .spinner-demo {
+            background-color: var(--bs-surface);
+            border-radius: var(--bs-border-radius);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .spinner-section {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .spinner-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background-color: var(--bs-card);
+            border-radius: var(--bs-border-radius);
+            margin: 0.5rem;
+            min-height: 120px;
+        }
+        
+        .spinner-variations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .custom-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 0.25em solid currentColor;
+            border-right-color: transparent;
+        }
+        
+        .pulse-spinner {
+            width: 3rem;
+            height: 3rem;
+            background-color: currentColor;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0.7;
+            }
+        }
+        
+        .bounce-spinner {
+            display: flex;
+            gap: 0.25rem;
+        }
+        
+        .bounce-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: currentColor;
+            border-radius: 50%;
+            animation: bounce 1.4s ease-in-out infinite both;
+        }
+        
+        .bounce-dot:nth-child(1) { animation-delay: -0.32s; }
+        .bounce-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+        
+        .wave-spinner {
+            display: flex;
+            gap: 0.25rem;
+            align-items: center;
+        }
+        
+        .wave-bar {
+            width: 0.4rem;
+            height: 1.5rem;
+            background-color: currentColor;
+            border-radius: 0.2rem;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(1) { animation-delay: -1.2s; }
+        .wave-bar:nth-child(2) { animation-delay: -1.1s; }
+        .wave-bar:nth-child(3) { animation-delay: -1.0s; }
+        .wave-bar:nth-child(4) { animation-delay: -0.9s; }
+        .wave-bar:nth-child(5) { animation-delay: -0.8s; }
+        
+        @keyframes wave {
+            0%, 40%, 100% {
+                transform: scaleY(0.4);
+            }
+            20% {
+                transform: scaleY(1);
+            }
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <header class="navbar navbar-expand-lg sticky-top shadow-lg p-3" style="background-color: var(--bs-surface);">
+        <div class="container-fluid">
+            <a class="navbar-brand text-accent fw-bold fs-4" href="#">DevHub</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user text-accent me-2 fs-5"></i>
+                    <button class="btn btn-primary btn-sm rounded-3 fw-bold">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="tutorial-container">
+        <aside class="d-none d-lg-block p-4 sidebar-fixed" style="background-color: var(--bs-card);">
+            <div>
+                <h3 class="text-accent text-center mb-4">BOOTSTRAP TUTORIAL</h3>
+                <hr class="border-secondary">
+                <ul class="list-unstyled"> 
+                    <!-- Getting Started Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#gettingStarted" role="button" aria-expanded="false">
+                            Getting Started
+                        </a>
+                        <div class="collapse" id="gettingStarted">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="introduction.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Introduction</a></li>
+                                <li class="mb-2"><a href="index.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Download</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Customize Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#customize" role="button" aria-expanded="false">
+                            Customize
+                        </a>
+                        <div class="collapse" id="customize">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="overview.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Overview</a></li>
+                                <li class="mb-2"><a href="sass.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Sass</a></li>
+                                <li class="mb-2"><a href="color.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color</a></li>
+                                <li class="mb-2"><a href="color-modes.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color Modes</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Layout Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#layout" role="button" aria-expanded="false">
+                            Layout
+                        </a>
+                        <div class="collapse" id="layout">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="layout-breakpoints.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breakpoints</a></li>
+                                <li class="mb-2"><a href="layout-containers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Containers</a></li>
+                                <li class="mb-2"><a href="layout-grid.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Grid</a></li>
+                                <li class="mb-2"><a href="layout-columns.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Columns</a></li>
+                                <li class="mb-2"><a href="layout-gutters.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Gutters</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Content Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#content" role="button" aria-expanded="false">
+                            Content
+                        </a>
+                        <div class="collapse" id="content">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="content-typography.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Typography</a></li>
+                                <li class="mb-2"><a href="content-images.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Images</a></li>
+                                <li class="mb-2"><a href="content-tables.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tables</a></li>
+                                <li class="mb-2"><a href="content-figures.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Figures</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Forms Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#forms" role="button" aria-expanded="false">
+                            Forms
+                        </a>
+                        <div class="collapse" id="forms">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="forms-control.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Forms Control</a></li>
+                                <li class="mb-2"><a href="forms-select.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Select</a></li>
+                                <li class="mb-2"><a href="forms-checks-radios.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Checks & Radios</a></li>
+                                <li class="mb-2"><a href="forms-range.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Range</a></li>
+                                <li class="mb-2"><a href="forms-input-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Input Groups</a></li>
+                                <li class="mb-2"><a href="forms-layout.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Form Layout</a></li>
+                                <li class="mb-2"><a href="forms-validation.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Validation</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Components Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#components" role="button" aria-expanded="true">
+                            Components
+                        </a>
+                        <div class="collapse show" id="components">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="components-accordion.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Accordion</a></li>
+                                <li class="mb-2"><a href="components-alert.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Alert</a></li>
+                                <li class="mb-2"><a href="components-badge.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Badge</a></li>
+                                <li class="mb-2"><a href="components-breadcrumb.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breadcrumb</a></li>
+                                <li class="mb-2"><a href="components-buttons.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Buttons</a></li>
+                                <li class="mb-2"><a href="components-buttons-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Buttons Groups</a></li>
+                                <li class="mb-2"><a href="components-cards.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Cards</a></li>
+                                <li class="mb-2"><a href="components-carousel.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Carousel</a></li>
+                                <li class="mb-2"><a href="components-close-button.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Close Button</a></li>
+                                <li class="mb-2"><a href="components-collapse.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Collapse</a></li>
+                                <li class="mb-2"><a href="components-dropdown.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Dropdown</a></li>
+                                <li class="mb-2"><a href="components-list-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">List Groups</a></li>
+                                <li class="mb-2"><a href="components-modal.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Modal</a></li>
+                                <li class="mb-2"><a href="components-navbar.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Navbar</a></li>
+                                <li class="mb-2"><a href="components-nav-tabs.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Nav & Tabs</a></li>
+                                <li class="mb-2"><a href="components-pagination.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Pagination</a></li>
+                                <li class="mb-2"><a href="components-placeholders.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Placeholders</a></li>
+                                <li class="mb-2"><a href="components-popovers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Popovers</a></li>
+                                <li class="mb-2"><a href="components-progress.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Progress Bars</a></li>
+                                <li class="mb-2"><a href="components-scrollspy.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Scrollspy</a></li>
+                                <li class="mb-2"><a href="components-spinners.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3 active-topic">Spinners</a></li>
+                                <li class="mb-2"><a href="components-toast.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Toast</a></li>
+                                <li class="mb-2"><a href="components-tooltip.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tooltip</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Helpers Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#helpers" role="button" aria-expanded="false">
+                            Helpers
+                        </a>
+                        <div class="collapse" id="helpers">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="helpers-color.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color</a></li>
+                                <li class="mb-2"><a href="helpers-stack.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Stack</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Utilities Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#utilities" role="button" aria-expanded="false">
+                            Utilities
+                        </a>
+                        <div class="collapse" id="utilities">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="utilities-background.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Background</a></li>
+                                <li class="mb-2"><a href="utilities-borders.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Borders</a></li>
+                                <li class="mb-2"><a href="utilities-colors.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Colors</a></li>
+                                <li class="mb-2"><a href="utilities-display.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Display</a></li>
+                                <li class="mb-2"><a href="utilities-flex.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Flex</a></li>
+                                <li class="mb-2"><a href="utilities-float.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Float</a></li>
+                                <li class="mb-2"><a href="utilities-interactions.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Interactions</a></li>
+                                <li class="mb-2"><a href="utilities-links.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Links</a></li>
+                                <li class="mb-2"><a href="utilities-object-fit.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Object Fit</a></li>
+                                <li class="mb-2"><a href="utilities-opacity.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Opacity</a></li>
+                                <li class="mb-2"><a href="utilities-overflow.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Overflow</a></li>
+                                <li class="mb-2"><a href="utilities-position.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Position</a></li>
+                                <li class="mb-2"><a href="utilities-shadows.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Shadows</a></li>
+                                <li class="mb-2"><a href="utilities-sizing.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Sizing</a></li>
+                                <li class="mb-2"><a href="utilities-spacing.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spacing</a></li>
+                                <li class="mb-2"><a href="utilities-text.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Text</a></li>
+                                <li class="mb-2"><a href="utilities-vertical-align.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Vertical Align</a></li>
+                                <li class="mb-2"><a href="utilities-visibility.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Visibility</a></li>
+                                <li class="mb-2"><a href="utilities-z-index.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Z-index</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Extend Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#extend" role="button" aria-expanded="false">
+                            Extend
+                        </a>
+                        <div class="collapse" id="extend">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="extend-icons.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Icons</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="content-area p-4 ml-30 col-12 col-lg-9">
+            <h1 class="text-accent text-center mb-4">BOOTSTRAP SPINNERS</h1>
+            <hr class="border-secondary mb-5">
+            
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Spinners Overview</h2>
+                <p class="mb-3">Bootstrap spinners indicate loading states for components or pages. They're built entirely with HTML, CSS, and no JavaScript, making them lightweight and easy to customize.</p>
+                
+                <div class="alert alert-primary p-3 border-0 rounded-3" style="background-color: rgba(124, 58, 237, 0.1); color: white;">
+                    <i class="fas fa-lightbulb me-2"></i><strong>Pro Tip:</strong> Spinners can be used inside buttons, as standalone elements, or with text to provide context about what's loading.
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Border Spinners</h2>
+                
+                <div class="spinner-demo">
+                    <h4 class="text-white">Basic Border Spinner</h4>
+                    <div class="spinner-box">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Colored Border Spinners</h4>
+                    <div class="spinner-variations">
+                        <div class="spinner-box">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-danger" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-warning" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-info" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-light" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-dark" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Basic Border Spinner --&gt;
+&lt;div class="spinner-border" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Colored Border Spinners --&gt;
+&lt;div class="spinner-border text-primary" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-border text-success" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-border text-danger" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Growing Spinners</h2>
+                
+                <div class="spinner-demo">
+                    <h4 class="text-white">Basic Growing Spinner</h4>
+                    <div class="spinner-box">
+                        <div class="spinner-grow" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Colored Growing Spinners</h4>
+                    <div class="spinner-variations">
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-secondary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-danger" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-warning" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-info" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-light" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow text-dark" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Basic Growing Spinner --&gt;
+&lt;div class="spinner-grow" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Colored Growing Spinners --&gt;
+&lt;div class="spinner-grow text-primary" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-grow text-success" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-grow text-danger" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Spinner Sizes</h2>
+                
+                <div class="spinner-demo">
+                    <h4 class="text-white">Border Spinner Sizes</h4>
+                    <div class="d-flex align-items-center gap-4 flex-wrap">
+                        <div class="spinner-box">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Growing Spinner Sizes</h4>
+                    <div class="d-flex align-items-center gap-4 flex-wrap">
+                        <div class="spinner-box">
+                            <div class="spinner-grow spinner-grow-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Border Spinner Sizes --&gt;
+&lt;div class="spinner-border spinner-border-sm" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-border" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Growing Spinner Sizes --&gt;
+&lt;div class="spinner-grow spinner-grow-sm" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-grow" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Spinners with Text</h2>
+                
+                <div class="spinner-demo">
+                    <h4 class="text-white">Spinners with Loading Text</h4>
+                    <div class="spinner-variations">
+                        <div class="spinner-box">
+                            <div class="d-flex align-items-center">
+                                <div class="spinner-border text-primary me-3" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <strong>Loading...</strong>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="d-flex align-items-center">
+                                <div class="spinner-grow text-success me-3" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <strong>Processing...</strong>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="text-center">
+                                <div class="spinner-border text-warning mb-2" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div>Please wait...</div>
+                            </div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="text-center">
+                                <div class="spinner-grow text-info mb-2" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div>Initializing...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Button Spinners</h4>
+                    <div class="spinner-variations">
+                        <div class="spinner-box">
+                            <button class="btn btn-primary" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                        <div class="spinner-box">
+                            <button class="btn btn-success" type="button" disabled>
+                                <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                                Processing...
+                            </button>
+                        </div>
+                        <div class="spinner-box">
+                            <button class="btn btn-danger" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                <span class="visually-hidden">Loading...</span>
+                            </button>
+                        </div>
+                        <div class="spinner-box">
+                            <button class="btn btn-warning" type="button" disabled>
+                                <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                                <span class="visually-hidden">Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Spinner with Text --&gt;
+&lt;div class="d-flex align-items-center"&gt;
+  &lt;div class="spinner-border text-primary me-3" role="status"&gt;
+    &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;strong&gt;Loading...&lt;/strong&gt;
+&lt;/div&gt;
+
+&lt;!-- Button with Spinner --&gt;
+&lt;button class="btn btn-primary" type="button" disabled&gt;
+  &lt;span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"&gt;&lt;/span&gt;
+  Loading...
+&lt;/button&gt;
+
+&lt;button class="btn btn-success" type="button" disabled&gt;
+  &lt;span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"&gt;&lt;/span&gt;
+  Processing...
+&lt;/button&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Custom Spinners</h2>
+                
+                <div class="spinner-demo">
+                    <h4 class="text-white">Custom Animation Spinners</h4>
+                    <div class="spinner-variations">
+                        <div class="spinner-box">
+                            <div class="pulse-spinner text-primary"></div>
+                            <div class="mt-2 small">Pulse Spinner</div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="bounce-spinner text-success">
+                                <div class="bounce-dot"></div>
+                                <div class="bounce-dot"></div>
+                                <div class="bounce-dot"></div>
+                            </div>
+                            <div class="mt-2 small">Bounce Spinner</div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="wave-spinner text-warning">
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                                <div class="wave-bar"></div>
+                            </div>
+                            <div class="mt-2 small">Wave Spinner</div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="custom-spinner text-info"></div>
+                            <div class="mt-2 small">Custom Border</div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Custom Styled Spinners</h4>
+                    <div class="spinner-variations">
+                        <div class="spinner-box">
+                            <div class="spinner-border" style="border-width: 0.3em; border-top-color: #7C3AED; border-right-color: #06B6D4; border-bottom-color: #10B981; border-left-color: #EF4444;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="mt-2 small">Multi-color</div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border" style="border-width: 0.5em; animation-duration: 0.8s;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="mt-2 small">Thick Border</div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-grow" style="background: linear-gradient(45deg, #7C3AED, #06B6D4);" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="mt-2 small">Gradient</div>
+                        </div>
+                        <div class="spinner-box">
+                            <div class="spinner-border text-primary" style="border-radius: 50% 20% / 10% 40%;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="mt-2 small">Custom Shape</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Custom Multi-color Spinner --&gt;
+&lt;div class="spinner-border" 
+     style="border-width: 0.3em; 
+            border-top-color: #7C3AED; 
+            border-right-color: #06B6D4; 
+            border-bottom-color: #10B981; 
+            border-left-color: #EF4444;" 
+     role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Custom Animation Speed --&gt;
+&lt;div class="spinner-border" style="animation-duration: 0.8s;" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Gradient Growing Spinner --&gt;
+&lt;div class="spinner-grow" style="background: linear-gradient(45deg, #7C3AED, #06B6D4);" role="status"&gt;
+  &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Spinner Placement</h2>
+                
+                <div class="spinner-demo">
+                    <h4 class="text-white">Center Alignment</h4>
+                    <div class="spinner-box" style="min-height: 200px;">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="text-center">
+                                <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <h5 class="text-white">Loading Content</h5>
+                                <p class="text-muted">Please wait while we load your data...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Inline with Content</h4>
+                    <div class="spinner-box">
+                        <div class="card bg-transparent border-secondary">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title text-white">Data Processing</h5>
+                                        <p class="card-text text-muted">Your request is being processed...</p>
+                                    </div>
+                                    <div class="spinner-border text-success" role="status">
+                                        <span class="visually-hidden">Processing...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="text-white mt-4">Overlay Spinner</h4>
+                    <div class="spinner-box position-relative" style="min-height: 150px; background-color: var(--bs-surface);">
+                        <div class="p-3">
+                            <h5 class="text-white">Content Area</h5>
+                            <p class="text-muted">This is the main content that would be loading...</p>
+                        </div>
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background-color: rgba(15, 23, 36, 0.8);">
+                            <div class="text-center">
+                                <div class="spinner-grow text-primary mb-2" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div class="text-white">Loading overlay content...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Center Aligned Spinner --&gt;
+&lt;div class="d-flex justify-content-center align-items-center h-100"&gt;
+  &lt;div class="text-center"&gt;
+    &lt;div class="spinner-border text-primary mb-3" role="status"&gt;
+      &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;h5&gt;Loading Content&lt;/h5&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Overlay Spinner --&gt;
+&lt;div class="position-relative"&gt;
+  &lt;!-- Your content here --&gt;
+  &lt;div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.7);"&gt;
+    &lt;div class="text-center"&gt;
+      &lt;div class="spinner-grow text-primary mb-2" role="status"&gt;
+        &lt;span class="visually-hidden"&gt;Loading...&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="text-white"&gt;Loading...&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+            
+            <div class="summary-box p-4 mt-5">
+                <h3 class="text-accent fs-4">Spinner Best Practices</h3>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle me-2 text-success"></i> <strong>Accessibility:</strong> Always include <code>role="status"</code> and <code>visually-hidden</code> text for screen readers.</li>
+                    <li><i class="bi bi-palette me-2 text-success"></i> <strong>Contextual Colors:</strong> Use appropriate colors that match your application's status indicators.</li>
+                    <li><i class="bi bi-clock me-2 text-success"></i> <strong>Appropriate Duration:</strong> Use spinners for operations that take 1-10 seconds; consider progress bars for longer tasks.</li>
+                    <li><i class="bi bi-text-paragraph me-2 text-success"></i> <strong>Clear Messaging:</strong> Provide text labels to explain what is being loaded or processed.</li>
+                    <li><i class="bi bi-layout-wtf me-2 text-success"></i> <strong>Proper Placement:</strong> Position spinners where they won't disrupt the user's workflow.</li>
+                </ul>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="components-scrollspy.html" class="btn btn-outline-primary">Previous: Scrollspy</a>
+                <a href="components-toast.html" class="btn btn-primary">Next: Toast</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-5 pt-4" style="background-color: var(--bs-surface); color: var(--bs-body-color);">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 align-items-center mb-4 g-4">
+                
+                <div class="col text-center text-md-start">
+                    <div class="text-accent fw-bold fs-4">DevHub</div>
+                    <p class="text-muted mb-0">Learn • Code • Create</p>
+                </div>
+                
+                <div class="col text-center">
+                    <p class="mb-1">Created with ❤️ by <strong class="text-accent">Abhi Borude</strong></p>
+                    <p class="text-muted mb-0">&copy; 2024 DevHub Tutorials. All rights reserved.</p>
+                </div>
+                
+                <div class="col">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-3 border-top border-secondary-subtle">
+                <p class="text-muted mb-0">Made possible by HTML, CSS, and Bootstrap</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Interactive spinner examples
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight active navigation item
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.aside-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active-topic');
+                }
+            });
+            
+            // Demo: Toggle spinner visibility
+            const demoButtons = document.querySelectorAll('.btn[type="button"]');
+            demoButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const spinner = this.querySelector('.spinner-border, .spinner-grow');
+                    if (spinner) {
+                        this.disabled = true;
+                        // Simulate loading for 3 seconds
+                        setTimeout(() => {
+                            this.disabled = false;
+                        }, 3000);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Tutorial - Cards</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bs-body-bg: #0B1220;
+            --bs-body-color: #E6EEF3;
+            --bs-primary: #7C3AED; 
+            --bs-secondary: #06B6D4; 
+            --bs-success: #10B981;
+            --bs-danger: #EF4444;
+            --bs-warning: #F59E0B;
+            --bs-info: #0EA5E9;
+            --bs-light: #1E293B;
+            --bs-dark: #0F172A;
+            --bs-surface: #0F1724; 
+            --bs-card: #111827;
+            --bs-code-bg: #071026;  
+            --bs-border-color: rgba(255,255,255,0.06);
+            --bs-box-shadow: 0 0.5rem 1rem rgba(2,6,23,0.6);
+            --bs-border-radius: 0.625rem; 
+        }
+
+        html{
+            scroll-padding-top: 90px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            line-height: 1.6;
+        }
+
+        .btn-primary, .bg-primary, .text-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; color: white !important; }
+        .text-accent { color: var(--bs-secondary) !important; }
+        
+        .tutorial-container {
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 992px) {
+            .sidebar-fixed {
+                width: 250px;
+                height: calc(100vh - 70px); 
+                position: fixed;
+                top: 70px; 
+                overflow-y: auto;
+                background-color: var(--bs-card);
+                border-right: 1px solid var(--bs-border-color);
+            }
+            .content-area {
+                margin-left: 250px;
+            }
+        }
+        
+        .info-cont, .example-box, .try-it-box, .warning-box, .task-box, .summary-box, .analogy-box {
+            background-color: var(--bs-card);
+            box-shadow: var(--bs-box-shadow);
+            border-radius: var(--bs-border-radius);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-cont:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.8);
+        }
+
+        .info-cont { 
+            border-left: 4px solid var(--bs-primary); 
+        }
+        .warning-box {
+             border-left: 4px solid var(--bs-danger); background-color: rgba(239, 68, 68, 0.1); 
+            }
+        .task-box { 
+            border-left: 4px solid var(--bs-success); background-color: rgba(16, 185, 129, 0.1); 
+        }
+        .summary-box {
+             border-left: 4px solid var(--bs-secondary); background-color: rgba(6, 182, 212, 0.1); 
+            }
+        .analogy-box {
+             border-left: 4px solid #00BCD4; background-color: rgba(0, 188, 212, 0.1);
+             }
+
+        .code-example, .code-editor, .output-box {
+            background-color: var(--bs-code-bg);
+            border-color: var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
+        }
+        .code-editor {
+             min-height: 150px;
+             font-family: 'Courier New', monospace;
+             color: var(--bs-body-color);
+        }
+        .code-example pre, .code-example code {
+            color: var(--bs-body-color);
+        }
+        
+        .content table {
+            border-collapse: collapse;
+        }
+        .content th {
+            background-color: var(--bs-surface);
+            color: var(--bs-secondary);
+        }
+        .content td {
+            border-bottom: 1px solid var(--bs-border-color);
+        }
+        .content tbody tr:hover {
+            background-color: rgba(255,255,255,0.04);
+        }
+        
+        .aside-link:hover {
+            color: var(--bs-primary) !important;
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #2c3e50; 
+        }
+        
+        .sidebar-fixed::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .dropdown-toggle::after {
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown-toggle[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            background-color: var(--bs-card);
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .dropdown-item {
+            color: var(--bs-body-color);
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: var(--bs-primary);
+        }
+        
+        .active-topic {
+            background-color: rgba(124, 58, 237, 0.2) !important;
+            color: var(--bs-primary) !important;
+        }
+        
+        .card-demo {
+            background-color: var(--bs-surface);
+            border-radius: var(--bs-border-radius);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .demo-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .card-custom {
+            border: none;
+            box-shadow: var(--bs-box-shadow);
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, var(--bs-card), var(--bs-surface));
+        }
+        
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 2rem rgba(2, 6, 23, 0.8);
+        }
+        
+        .card-gradient-primary {
+            background: linear-gradient(135deg, var(--bs-primary), #9d4edd);
+            color: white;
+        }
+        
+        .card-gradient-success {
+            background: linear-gradient(135deg, var(--bs-success), #34d399);
+            color: white;
+        }
+        
+        .card-img-overlay-custom {
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .card-horizontal {
+            flex-direction: row;
+        }
+        
+        .card-horizontal img {
+            width: 40%;
+            object-fit: cover;
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1;
+        }
+        
+        .card-interactive {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .card-interactive:hover {
+            border-color: var(--bs-primary);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card-stats {
+            background: linear-gradient(145deg, var(--bs-surface), var(--bs-card));
+            border-left: 4px solid var(--bs-primary);
+        }
+        
+        .card-pricing {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .card-pricing.featured {
+            border-color: var(--bs-primary);
+            transform: scale(1.05);
+        }
+        
+        .card-pricing:hover {
+            border-color: var(--bs-primary);
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <header class="navbar navbar-expand-lg sticky-top shadow-lg p-3" style="background-color: var(--bs-surface);">
+        <div class="container-fluid">
+            <a class="navbar-brand text-accent fw-bold fs-4" href="#">DevHub</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user text-accent me-2 fs-5"></i>
+                    <button class="btn btn-primary btn-sm rounded-3 fw-bold">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="tutorial-container">
+        <aside class="d-none d-lg-block p-4 sidebar-fixed" style="background-color: var(--bs-card);">
+            <div>
+                <h3 class="text-accent text-center mb-4">BOOTSTRAP TUTORIAL</h3>
+                <hr class="border-secondary">
+                <ul class="list-unstyled"> 
+                    <!-- Getting Started Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#gettingStarted" role="button" aria-expanded="false">
+                            Getting Started
+                        </a>
+                        <div class="collapse" id="gettingStarted">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="introduction.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Introduction</a></li>
+                                <li class="mb-2"><a href="index.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Download</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Customize Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#customize" role="button" aria-expanded="false">
+                            Customize
+                        </a>
+                        <div class="collapse" id="customize">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="overview.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Overview</a></li>
+                                <li class="mb-2"><a href="sass.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Sass</a></li>
+                                <li class="mb-2"><a href="color.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color</a></li>
+                                <li class="mb-2"><a href="color-modes.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color Modes</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Layout Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#layout" role="button" aria-expanded="false">
+                            Layout
+                        </a>
+                        <div class="collapse" id="layout">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="layout-breakpoints.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breakpoints</a></li>
+                                <li class="mb-2"><a href="layout-containers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Containers</a></li>
+                                <li class="mb-2"><a href="layout-grid.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Grid</a></li>
+                                <li class="mb-2"><a href="layout-columns.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Columns</a></li>
+                                <li class="mb-2"><a href="layout-gutters.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Gutters</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Content Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#content" role="button" aria-expanded="false">
+                            Content
+                        </a>
+                        <div class="collapse" id="content">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="content-typography.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Typography</a></li>
+                                <li class="mb-2"><a href="content-images.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Images</a></li>
+                                <li class="mb-2"><a href="content-tables.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tables</a></li>
+                                <li class="mb-2"><a href="content-figures.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Figures</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Forms Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#forms" role="button" aria-expanded="false">
+                            Forms
+                        </a>
+                        <div class="collapse" id="forms">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="forms-control.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Forms Control</a></li>
+                                <li class="mb-2"><a href="forms-select.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Select</a></li>
+                                <li class="mb-2"><a href="forms-checks-radios.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Checks & Radios</a></li>
+                                <li class="mb-2"><a href="forms-range.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Range</a></li>
+                                <li class="mb-2"><a href="forms-input-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Input Groups</a></li>
+                                <li class="mb-2"><a href="forms-layout.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Form Layout</a></li>
+                                <li class="mb-2"><a href="forms-validation.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Validation</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Components Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#components" role="button" aria-expanded="true">
+                            Components
+                        </a>
+                        <div class="collapse show" id="components">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="components-accordion.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Accordion</a></li>
+                                <li class="mb-2"><a href="components-alert.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Alert</a></li>
+                                <li class="mb-2"><a href="components-badge.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Badge</a></li>
+                                <li class="mb-2"><a href="components-breadcrumb.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breadcrumb</a></li>
+                                <li class="mb-2"><a href="components-buttons.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Buttons</a></li>
+                                <li class="mb-2"><a href="components-buttons-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Buttons Groups</a></li>
+                                <li class="mb-2"><a href="components-cards.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3 active-topic">Cards</a></li>
+                                <li class="mb-2"><a href="components-carousel.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Carousel</a></li>
+                                <li class="mb-2"><a href="components-close-button.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Close Button</a></li>
+                                <li class="mb-2"><a href="components-collapse.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Collapse</a></li>
+                                <li class="mb-2"><a href="components-dropdown.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Dropdown</a></li>
+                                <li class="mb-2"><a href="components-list-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">List Groups</a></li>
+                                <li class="mb-2"><a href="components-modal.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Modal</a></li>
+                                <li class="mb-2"><a href="components-navbar.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Navbar</a></li>
+                                <li class="mb-2"><a href="components-nav-tabs.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Nav & Tabs</a></li>
+                                <li class="mb-2"><a href="components-pagination.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Pagination</a></li>
+                                <li class="mb-2"><a href="components-placeholders.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Placeholders</a></li>
+                                <li class="mb-2"><a href="components-popovers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Popovers</a></li>
+                                <li class="mb-2"><a href="components-progress.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Progress Bars</a></li>
+                                <li class="mb-2"><a href="components-scrollspy.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Scrollspy</a></li>
+                                <li class="mb-2"><a href="components-spinners.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spinners</a></li>
+                                <li class="mb-2"><a href="components-toast.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Toast</a></li>
+                                <li class="mb-2"><a href="components-tooltip.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tooltip</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Helpers Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#helpers" role="button" aria-expanded="false">
+                            Helpers
+                        </a>
+                        <div class="collapse" id="helpers">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="helpers-color.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color</a></li>
+                                <li class="mb-2"><a href="helpers-stack.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Stack</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Utilities Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#utilities" role="button" aria-expanded="false">
+                            Utilities
+                        </a>
+                        <div class="collapse" id="utilities">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="utilities-background.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Background</a></li>
+                                <li class="mb-2"><a href="utilities-borders.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Borders</a></li>
+                                <li class="mb-2"><a href="utilities-colors.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Colors</a></li>
+                                <li class="mb-2"><a href="utilities-display.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Display</a></li>
+                                <li class="mb-2"><a href="utilities-flex.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Flex</a></li>
+                                <li class="mb-2"><a href="utilities-float.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Float</a></li>
+                                <li class="mb-2"><a href="utilities-interactions.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Interactions</a></li>
+                                <li class="mb-2"><a href="utilities-links.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Links</a></li>
+                                <li class="mb-2"><a href="utilities-object-fit.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Object Fit</a></li>
+                                <li class="mb-2"><a href="utilities-opacity.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Opacity</a></li>
+                                <li class="mb-2"><a href="utilities-overflow.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Overflow</a></li>
+                                <li class="mb-2"><a href="utilities-position.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Position</a></li>
+                                <li class="mb-2"><a href="utilities-shadows.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Shadows</a></li>
+                                <li class="mb-2"><a href="utilities-sizing.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Sizing</a></li>
+                                <li class="mb-2"><a href="utilities-spacing.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spacing</a></li>
+                                <li class="mb-2"><a href="utilities-text.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Text</a></li>
+                                <li class="mb-2"><a href="utilities-vertical-align.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Vertical Align</a></li>
+                                <li class="mb-2"><a href="utilities-visibility.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Visibility</a></li>
+                                <li class="mb-2"><a href="utilities-z-index.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Z-index</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Extend Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#extend" role="button" aria-expanded="false">
+                            Extend
+                        </a>
+                        <div class="collapse" id="extend">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="extend-icons.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Icons</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="content-area p-4 ml-30 col-12 col-lg-9">
+            <h1 class="text-accent text-center mb-4">BOOTSTRAP CARDS</h1>
+            <hr class="border-secondary mb-5">
+            
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Card Overview</h2>
+                <p class="mb-3">Bootstrap cards are flexible and extensible content containers with multiple variants and options. They provide a clean and organized way to display various types of content including images, text, lists, and buttons.</p>
+                
+                <div class="alert alert-primary p-3 border-0 rounded-3" style="background-color: rgba(124, 58, 237, 0.1); color: white;">
+                    <i class="fas fa-lightbulb me-2"></i><strong>Pro Tip:</strong> Cards are perfect for creating modern, responsive layouts for content display, product showcases, user profiles, and dashboard widgets.
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Basic Card Structure</h2>
+                
+                <div class="card-demo">
+                    <h4 class="text-white">Simple Card Example</h4>
+                    <div class="demo-section">
+                        <div class="card card-custom" style="max-width: 400px;">
+                            <div class="card-body">
+                                <h5 class="card-title">Card Title</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="text-white mt-4">Card with Image</h5>
+                    <div class="demo-section">
+                        <div class="card card-custom" style="max-width: 400px;">
+                            <img src="https://via.placeholder.com/400x200/7C3AED/FFFFFF?text=Bootstrap+Card" class="card-img-top" alt="Card image">
+                            <div class="card-body">
+                                <h5 class="card-title">Card with Image</h5>
+                                <p class="card-text">This card has a supporting image that complements the content.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Basic Card --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Card Title&lt;/h5&gt;
+    &lt;h6 class="card-subtitle mb-2 text-muted"&gt;Card subtitle&lt;/h6&gt;
+    &lt;p class="card-text"&gt;Some quick example text...&lt;/p&gt;
+    &lt;a href="#" class="card-link"&gt;Card link&lt;/a&gt;
+    &lt;a href="#" class="card-link"&gt;Another link&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Card with Image --&gt;
+&lt;div class="card"&gt;
+  &lt;img src="image.jpg" class="card-img-top" alt="..."&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Card with Image&lt;/h5&gt;
+    &lt;p class="card-text"&gt;This card has a supporting image...&lt;/p&gt;
+    &lt;p class="card-text"&gt;&lt;small class="text-muted"&gt;Last updated 3 mins ago&lt;/small&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Card Content Types</h2>
+                
+                <div class="card-demo">
+                    <h4 class="text-white">Different Content Layouts</h4>
+                    <div class="card-grid">
+                        <!-- Card with Header and Footer -->
+                        <div class="card card-custom">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Featured</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                2 days ago
+                            </div>
+                        </div>
+
+                        <!-- Card with List Group -->
+                        <div class="card card-custom">
+                            <div class="card-header">
+                                <h5 class="mb-0">Features List</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent text-white">An item</li>
+                                <li class="list-group-item bg-transparent text-white">A second item</li>
+                                <li class="list-group-item bg-transparent text-white">A third item</li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+
+                        <!-- Card with Image Overlay -->
+                        <div class="card card-custom text-white">
+                            <img src="https://via.placeholder.com/400x200/06B6D4/FFFFFF?text=Overlay+Card" class="card-img" alt="Overlay image">
+                            <div class="card-img-overlay card-img-overlay-custom">
+                                <h5 class="card-title">Card with overlay</h5>
+                                <p class="card-text">This is a wider card with supporting text below.</p>
+                                <p class="card-text">Last updated 3 mins ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Card with Header and Footer --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;
+    Featured
+  &lt;/div&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Special title treatment&lt;/h5&gt;
+    &lt;p class="card-text"&gt;With supporting text...&lt;/p&gt;
+    &lt;a href="#" class="btn btn-primary"&gt;Go somewhere&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="card-footer text-muted"&gt;
+    2 days ago
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Card with List Group --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;
+    Features List
+  &lt;/div&gt;
+  &lt;ul class="list-group list-group-flush"&gt;
+    &lt;li class="list-group-item"&gt;An item&lt;/li&gt;
+    &lt;li class="list-group-item"&gt;A second item&lt;/li&gt;
+    &lt;li class="list-group-item"&gt;A third item&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;!-- Card with Image Overlay --&gt;
+&lt;div class="card text-white"&gt;
+  &lt;img src="image.jpg" class="card-img" alt="..."&gt;
+  &lt;div class="card-img-overlay"&gt;
+    &lt;h5 class="card-title"&gt;Card with overlay&lt;/h5&gt;
+    &lt;p class="card-text"&gt;This is a wider card...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Card Styles & Colors</h2>
+                
+                <div class="card-demo">
+                    <h4 class="text-white">Background Variants</h4>
+                    <div class="card-grid">
+                        <div class="card card-gradient-primary text-white mb-3">
+                            <div class="card-header">Primary Card</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Primary card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+
+                        <div class="card card-gradient-success text-white mb-3">
+                            <div class="card-header">Success Card</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Success card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-warning text-dark mb-3">
+                            <div class="card-header">Warning Card</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Warning card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+
+                        <div class="card bg-danger text-white mb-3">
+                            <div class="card-header">Danger Card</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Danger card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="text-white mt-4">Border Variants</h5>
+                    <div class="card-grid">
+                        <div class="card border-primary mb-3">
+                            <div class="card-header">Primary Border</div>
+                            <div class="card-body text-primary">
+                                <h5 class="card-title">Primary card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title.</p>
+                            </div>
+                        </div>
+
+                        <div class="card border-success mb-3">
+                            <div class="card-header">Success Border</div>
+                            <div class="card-body text-success">
+                                <h5 class="card-title">Success card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Background Variants --&gt;
+&lt;div class="card text-white bg-primary"&gt;
+  &lt;div class="card-header"&gt;Header&lt;/div&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Primary card title&lt;/h5&gt;
+    &lt;p class="card-text"&gt;Some quick example text...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="card text-white bg-success"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Success card title&lt;/h5&gt;
+    &lt;p class="card-text"&gt;Some quick example text...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Border Variants --&gt;
+&lt;div class="card border-primary"&gt;
+  &lt;div class="card-header"&gt;Primary Border&lt;/div&gt;
+  &lt;div class="card-body text-primary"&gt;
+    &lt;h5 class="card-title"&gt;Primary card title&lt;/h5&gt;
+    &lt;p class="card-text"&gt;Some quick example text...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Card Layouts</h2>
+                
+                <div class="card-demo">
+                    <h4 class="text-white">Card Groups & Grids</h4>
+                    <div class="demo-section">
+                        <div class="card-group">
+                            <div class="card card-custom me-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                            <div class="card card-custom me-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                            <div class="card card-custom">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="text-white mt-4">Horizontal Card</h5>
+                    <div class="demo-section">
+                        <div class="card card-custom card-horizontal" style="max-width: 600px;">
+                            <img src="https://via.placeholder.com/200x200/7C3AED/FFFFFF?text=Horizontal" class="card-img-left" alt="Horizontal card">
+                            <div class="card-body">
+                                <h5 class="card-title">Horizontal Card</h5>
+                                <p class="card-text">This is a card with horizontal layout. The image is on the left and content on the right.</p>
+                                <button class="btn btn-primary">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Card Group --&gt;
+&lt;div class="card-group"&gt;
+  &lt;div class="card"&gt;
+    &lt;div class="card-body"&gt;
+      &lt;h5 class="card-title"&gt;Card title&lt;/h5&gt;
+      &lt;p class="card-text"&gt;This is a wider card...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="card"&gt;
+    &lt;div class="card-body"&gt;
+      &lt;h5 class="card-title"&gt;Card title&lt;/h5&gt;
+      &lt;p class="card-text"&gt;This card has supporting text...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Horizontal Card --&gt;
+&lt;div class="card" style="max-width: 540px;"&gt;
+  &lt;div class="row g-0"&gt;
+    &lt;div class="col-md-4"&gt;
+      &lt;img src="image.jpg" class="img-fluid rounded-start" alt="..."&gt;
+    &lt;/div&gt;
+    &lt;div class="col-md-8"&gt;
+      &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Horizontal Card&lt;/h5&gt;
+        &lt;p class="card-text"&gt;This is a card with horizontal layout.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Interactive Cards</h2>
+                
+                <div class="card-demo">
+                    <h4 class="text-white">Cards with Interactive Elements</h4>
+                    <div class="card-grid">
+                        <!-- Product Card -->
+                        <div class="card card-custom card-interactive">
+                            <span class="card-badge badge bg-danger">Sale</span>
+                            <img src="https://via.placeholder.com/300x200/10B981/FFFFFF?text=Product" class="card-img-top" alt="Product">
+                            <div class="card-body">
+                                <h5 class="card-title">Premium Product</h5>
+                                <p class="card-text">High-quality product with amazing features and excellent performance.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 mb-0 text-primary">$99.99</span>
+                                    <span class="text-muted text-decoration-line-through">$129.99</span>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-primary w-100">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Profile Card -->
+                        <div class="card card-custom text-center">
+                            <div class="card-body">
+                                <img src="https://via.placeholder.com/100x100/7C3AED/FFFFFF?text=User" class="rounded-circle mb-3" alt="User" width="80" height="80">
+                                <h5 class="card-title">John Doe</h5>
+                                <p class="card-text text-muted">Web Developer</p>
+                                <p class="card-text">Passionate about creating amazing user experiences with modern web technologies.</p>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-outline-primary btn-sm">Message</button>
+                                    <button class="btn btn-primary btn-sm">Follow</button>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Joined January 2024</small>
+                            </div>
+                        </div>
+
+                        <!-- Stats Card -->
+                        <div class="card card-custom card-stats">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-chart-line fa-2x text-primary"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="card-title mb-1">Revenue</h5>
+                                        <h2 class="text-primary mb-0">$12,402</h2>
+                                        <small class="text-success">+18.2% from last month</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="text-white mt-4">Pricing Cards</h5>
+                    <div class="card-grid">
+                        <div class="card card-custom card-pricing text-center">
+                            <div class="card-header">
+                                <h4 class="my-0 fw-normal">Free</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">$0<small class="text-muted">/mo</small></h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>10 users included</li>
+                                    <li>2 GB of storage</li>
+                                    <li>Email support</li>
+                                    <li>Help center access</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-outline-primary">Sign up for free</button>
+                            </div>
+                        </div>
+
+                        <div class="card card-custom card-pricing featured text-center">
+                            <div class="card-header bg-primary text-white">
+                                <h4 class="my-0 fw-normal">Pro</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">$15<small class="text-muted">/mo</small></h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>20 users included</li>
+                                    <li>10 GB of storage</li>
+                                    <li>Priority email support</li>
+                                    <li>Help center access</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-primary">Get started</button>
+                            </div>
+                        </div>
+
+                        <div class="card card-custom card-pricing text-center">
+                            <div class="card-header">
+                                <h4 class="my-0 fw-normal">Enterprise</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">$29<small class="text-muted">/mo</small></h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <li>30 users included</li>
+                                    <li>15 GB of storage</li>
+                                    <li>Phone and email support</li>
+                                    <li>Help center access</li>
+                                </ul>
+                                <button type="button" class="btn btn-lg btn-outline-primary">Contact us</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Product Card --&gt;
+&lt;div class="card"&gt;
+  &lt;span class="badge bg-danger"&gt;Sale&lt;/span&gt;
+  &lt;img src="product.jpg" class="card-img-top" alt="Product"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Premium Product&lt;/h5&gt;
+    &lt;p class="card-text"&gt;High-quality product...&lt;/p&gt;
+    &lt;div class="d-flex justify-content-between"&gt;
+      &lt;span class="h5 text-primary"&gt;$99.99&lt;/span&gt;
+      &lt;button class="btn btn-primary"&gt;Add to Cart&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Stats Card --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;div class="d-flex align-items-center"&gt;
+      &lt;div&gt;
+        &lt;i class="fas fa-chart-line fa-2x text-primary"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div class="ms-3"&gt;
+        &lt;h5 class="card-title"&gt;Revenue&lt;/h5&gt;
+        &lt;h2 class="text-primary"&gt;$12,402&lt;/h2&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Pricing Card --&gt;
+&lt;div class="card text-center"&gt;
+  &lt;div class="card-header"&gt;
+    &lt;h4&gt;Pro&lt;/h4&gt;
+  &lt;/div&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h1&gt;$15&lt;small&gt;/mo&lt;/small&gt;&lt;/h1&gt;
+    &lt;ul class="list-unstyled"&gt;
+      &lt;li&gt;20 users included&lt;/li&gt;
+      &lt;li&gt;10 GB of storage&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;button class="btn btn-primary"&gt;Get started&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Card Options</h2>
+                
+                <div class="example-box p-3 mt-4">
+                    <h3 class="text-white fs-5">Card Classes and Components</h3>
+                    <table class="table table-bordered table-dark table-hover text-white">
+                        <thead>
+                            <tr>
+                                <th>Class/Component</th>
+                                <th>Description</th>
+                                <th>Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>.card</strong></td>
+                                <td>Base card container</td>
+                                <td>Required for all cards</td>
+                            </tr>
+                            <tr>
+                                <td><strong>.card-body</strong></td>
+                                <td>Main content area</td>
+                                <td>Contains card content</td>
+                            </tr>
+                            <tr>
+                                <td><strong>.card-header</strong></td>
+                                <td>Card header section</td>
+                                <td>Optional header content</td>
+                            </tr>
+                            <tr>
+                                <td><strong>.card-footer</strong></td>
+                                <td>Card footer section</td>
+                                <td>Optional footer content</td>
+                            </tr>
+                            <tr>
+                                <td><strong>.card-img-top</strong></td>
+                                <td>Top image placement</td>
+                                <td>Image at top of card</td>
+                            </tr>
+                            <tr>
+                                <td><strong>.card-img-overlay</strong></td>
+                                <td>Content over image</td>
+                                <td>Text overlay on card image</td>
+                            </tr>
+                            <tr>
+                                <td><strong>.card-group</strong></td>
+                                <td>Card group container</td>
+                                <td>Groups cards with equal width</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="summary-box p-4 mt-5">
+                <h3 class="text-accent fs-4">Card Best Practices</h3>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle me-2 text-success"></i> <strong>Consistent Design:</strong> Maintain consistent spacing, typography, and colors across all cards.</li>
+                    <li><i class="bi bi-chat-left-text me-2 text-success"></i> <strong>Clear Hierarchy:</strong> Use proper heading levels and visual hierarchy to guide users.</li>
+                    <li><i class="bi bi-eye me-2 text-success"></i> <strong>Visual Balance:</strong> Ensure images, text, and actions are well-balanced within the card.</li>
+                    <li><i class="bi bi-clock me-2 text-success"></i> <strong>Performance:</strong> Optimize images and content for fast loading times.</li>
+                </ul>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="components-buttons-groups.html" class="btn btn-outline-primary">Previous: Button Groups</a>
+                <a href="components-carousel.html" class="btn btn-primary">Next: Carousel</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-5 pt-4" style="background-color: var(--bs-surface); color: var(--bs-body-color);">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 align-items-center mb-4 g-4">
+                
+                <div class="col text-center text-md-start">
+                    <div class="text-accent fw-bold fs-4">DevHub</div>
+                    <p class="text-muted mb-0">Learn • Code • Create</p>
+                </div>
+                
+                <div class="col text-center">
+                    <p class="mb-1">Created with ❤️ by <strong class="text-accent">Abhi Borude</strong></p>
+                    <p class="text-muted mb-0">&copy; 2024 DevHub Tutorials. All rights reserved.</p>
+                </div>
+                
+                <div class="col">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-3 border-top border-secondary-subtle">
+                <p class="text-muted mb-0">Made possible by HTML, CSS, and Bootstrap</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize Bootstrap components
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight active navigation item
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.aside-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active-topic');
+                }
+            });
+            
+            // Interactive card functionality
+            const interactiveCards = document.querySelectorAll('.card-interactive');
+            interactiveCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const cardTitle = this.querySelector('.card-title')?.textContent || 'Card';
+                    alert(`You clicked on: ${cardTitle}\n\nThis could navigate to a detailed view or perform an action.`);
+                });
+            });
+            
+            // Pricing card selection
+            const pricingCards = document.querySelectorAll('.card-pricing');
+            pricingCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    pricingCards.forEach(c => c.classList.remove('featured'));
+                    this.classList.add('featured');
+                    
+                    const planName = this.querySelector('.card-header h4')?.textContent || 'Plan';
+                    const price = this.querySelector('.pricing-card-title')?.textContent || '$0';
+                    console.log(`Selected plan: ${planName} at ${price}`);
+                });
+            });
+            
+            // Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.btn-primary');
+            addToCartButtons.forEach(button => {
+                if (button.textContent.includes('Add to Cart') || button.textContent.includes('Get started')) {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const productName = this.closest('.card').querySelector('.card-title')?.textContent || 'Item';
+                        alert(`Added ${productName} to cart!`);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

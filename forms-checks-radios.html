@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Tutorial - Checks & Radios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bs-body-bg: #0B1220;
+            --bs-body-color: #E6EEF3;
+            --bs-primary: #7C3AED; 
+            --bs-secondary: #06B6D4; 
+            --bs-success: #10B981;
+            --bs-danger: #EF4444;
+            --bs-surface: #0F1724; 
+            --bs-card: #111827;
+            --bs-code-bg: #071026;  
+            --bs-border-color: rgba(255,255,255,0.06);
+            --bs-box-shadow: 0 0.5rem 1rem rgba(2,6,23,0.6);
+            --bs-border-radius: 0.625rem; 
+        }
+
+        html{
+            scroll-padding-top: 90px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            line-height: 1.6;
+        }
+
+        .btn-primary, .bg-primary, .text-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; color: white !important; }
+        .text-accent { color: var(--bs-secondary) !important; }
+        
+        .tutorial-container {
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 992px) {
+            .sidebar-fixed {
+                width: 250px;
+                height: calc(100vh - 70px); 
+                position: fixed;
+                top: 70px; 
+                overflow-y: auto;
+                background-color: var(--bs-card);
+                border-right: 1px solid var(--bs-border-color);
+            }
+            .content-area {
+                margin-left: 250px;
+            }
+        }
+        
+        .info-cont, .example-box, .try-it-box, .warning-box, .task-box, .summary-box, .analogy-box {
+            background-color: var(--bs-card);
+            box-shadow: var(--bs-box-shadow);
+            border-radius: var(--bs-border-radius);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-cont:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.8);
+        }
+
+        .info-cont { 
+            border-left: 4px solid var(--bs-primary); 
+        }
+        .warning-box {
+             border-left: 4px solid var(--bs-danger); background-color: rgba(239, 68, 68, 0.1); 
+            }
+        .task-box { 
+            border-left: 4px solid var(--bs-success); background-color: rgba(16, 185, 129, 0.1); 
+        }
+        .summary-box {
+             border-left: 4px solid var(--bs-secondary); background-color: rgba(6, 182, 212, 0.1); 
+            }
+        .analogy-box {
+             border-left: 4px solid #00BCD4; background-color: rgba(0, 188, 212, 0.1);
+             }
+
+        .code-example, .code-editor, .output-box {
+            background-color: var(--bs-code-bg);
+            border-color: var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
+        }
+        .code-editor {
+             min-height: 150px;
+             font-family: 'Courier New', monospace;
+             color: var(--bs-body-color);
+        }
+        .code-example pre, .code-example code {
+            color: var(--bs-body-color);
+        }
+        
+        .content table {
+            border-collapse: collapse;
+        }
+        .content th {
+            background-color: var(--bs-surface);
+            color: var(--bs-secondary);
+        }
+        .content td {
+            border-bottom: 1px solid var(--bs-border-color);
+        }
+        .content tbody tr:hover {
+            background-color: rgba(255,255,255,0.04);
+        }
+        
+        .aside-link:hover {
+            color: var(--bs-primary) !important;
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #2c3e50; 
+        }
+        
+        .sidebar-fixed::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .dropdown-toggle::after {
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown-toggle[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            background-color: var(--bs-card);
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .dropdown-item {
+            color: var(--bs-body-color);
+        }
+        
+        .dropdown-item:hover {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: var(--bs-primary);
+        }
+        
+        .active-topic {
+            background-color: rgba(124, 58, 237, 0.2) !important;
+            color: var(--bs-primary) !important;
+        }
+        
+        .checks-demo {
+            background-color: var(--bs-surface);
+            border-radius: var(--bs-border-radius);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .form-check-input-custom {
+            background-color: var(--bs-surface);
+            border: 2px solid var(--bs-border-color);
+        }
+        
+        .form-check-input-custom:checked {
+            background-color: var(--bs-primary);
+            border-color: var(--bs-primary);
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <header class="navbar navbar-expand-lg sticky-top shadow-lg p-3" style="background-color: var(--bs-surface);">
+        <div class="container-fluid">
+            <a class="navbar-brand text-accent fw-bold fs-4" href="#">DevHub</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user text-accent me-2 fs-5"></i>
+                    <button class="btn btn-primary btn-sm rounded-3 fw-bold">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="tutorial-container">
+        <aside class="d-none d-lg-block p-4 sidebar-fixed" style="background-color: var(--bs-card);">
+            <div>
+                <h3 class="text-accent text-center mb-4">BOOTSTRAP TUTORIAL</h3>
+                <hr class="border-secondary">
+                <ul class="list-unstyled"> 
+                    <!-- Getting Started Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#gettingStarted" role="button" aria-expanded="false">
+                            Getting Started
+                        </a>
+                        <div class="collapse" id="gettingStarted">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="intoduction.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Introduction</a></li>
+                                <li class="mb-2"><a href="index.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Download</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Customize Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#customize" role="button" aria-expanded="false">
+                            Customize
+                        </a>
+                        <div class="collapse" id="customize">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="overview.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Overview</a></li>
+                                <li class="mb-2"><a href="sass.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Sass</a></li>
+                                <li class="mb-2"><a href="color.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color</a></li>
+                                <li class="mb-2"><a href="color-modes.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color Modes</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Layout Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#layout" role="button" aria-expanded="false">
+                            Layout
+                        </a>
+                        <div class="collapse" id="layout">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="layout-breakpoints.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breakpoints</a></li>
+                                <li class="mb-2"><a href="layout-containers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Containers</a></li>
+                                <li class="mb-2"><a href="layout-grid.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Grid</a></li>
+                                <li class="mb-2"><a href="layout-columns.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Columns</a></li>
+                                <li class="mb-2"><a href="layout-gutters.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Gutters</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Content Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#content" role="button" aria-expanded="false">
+                            Content
+                        </a>
+                        <div class="collapse" id="content">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="content-typography.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Typography</a></li>
+                                <li class="mb-2"><a href="content-images.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Images</a></li>
+                                <li class="mb-2"><a href="content-tables.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tables</a></li>
+                                <li class="mb-2"><a href="content-figures.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Figures</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Forms Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#forms" role="button" aria-expanded="true">
+                            Forms
+                        </a>
+                        <div class="collapse show" id="forms">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="forms-control.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Forms Control</a></li>
+                                <li class="mb-2"><a href="forms-select.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Select</a></li>
+                                <li class="mb-2"><a href="forms-checks-radios.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3 active-topic">Checks & Radios</a></li>
+                                <li class="mb-2"><a href="forms-range.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Range</a></li>
+                                <li class="mb-2"><a href="forms-input-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Input Groups</a></li>
+                                <li class="mb-2"><a href="forms-layout.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Form Layout</a></li>
+                                <li class="mb-2"><a href="forms-validation.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Validation</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Components Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#components" role="button" aria-expanded="false">
+                            Components
+                        </a>
+                        <div class="collapse" id="components">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="components-accordion.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Accordion</a></li>
+                                <li class="mb-2"><a href="components-alert.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Alert</a></li>
+                                <li class="mb-2"><a href="components-badge.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Badge</a></li>
+                                <li class="mb-2"><a href="components-breadcrumb.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breadcrumb</a></li>
+                                <li class="mb-2"><a href="components-buttons.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Buttons</a></li>
+                                <li class="mb-2"><a href="components-buttons-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Buttons Groups</a></li>
+                                <li class="mb-2"><a href="components-cards.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Cards</a></li>
+                                <li class="mb-2"><a href="components-carousel.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Carousel</a></li>
+                                <li class="mb-2"><a href="components-close-button.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Close Button</a></li>
+                                <li class="mb-2"><a href="components-collapse.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Collapse</a></li>
+                                <li class="mb-2"><a href="components-dropdown.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Dropdown</a></li>
+                                <li class="mb-2"><a href="components-list-groups.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">List Groups</a></li>
+                                <li class="mb-2"><a href="components-modal.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Modal</a></li>
+                                <li class="mb-2"><a href="components-navbar.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Navbar</a></li>
+                                <li class="mb-2"><a href="components-nav-tabs.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Nav & Tabs</a></li>
+                                <li class="mb-2"><a href="components-pagination.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Pagination</a></li>
+                                <li class="mb-2"><a href="components-placeholders.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Placeholders</a></li>
+                                <li class="mb-2"><a href="components-popovers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Popovers</a></li>
+                                <li class="mb-2"><a href="components-progress.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Progress Bars</a></li>
+                                <li class="mb-2"><a href="components-scrollspy.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Scrollspy</a></li>
+                                <li class="mb-2"><a href="components-spinners.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spinners</a></li>
+                                <li class="mb-2"><a href="components-toast.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Toast</a></li>
+                                <li class="mb-2"><a href="components-tooltip.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tooltip</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Helpers Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#helpers" role="button" aria-expanded="false">
+                            Helpers
+                        </a>
+                        <div class="collapse" id="helpers">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="helpers-color.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color</a></li>
+                                <li class="mb-2"><a href="helpers-stack.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Stack</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Utilities Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#utilities" role="button" aria-expanded="false">
+                            Utilities
+                        </a>
+                        <div class="collapse" id="utilities">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="utilities-background.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Background</a></li>
+                                <li class="mb-2"><a href="utilities-borders.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Borders</a></li>
+                                <li class="mb-2"><a href="utilities-colors.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Colors</a></li>
+                                <li class="mb-2"><a href="utilities-display.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Display</a></li>
+                                <li class="mb-2"><a href="utilities-flex.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Flex</a></li>
+                                <li class="mb-2"><a href="utilities-float.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Float</a></li>
+                                <li class="mb-2"><a href="utilities-interactions.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Interactions</a></li>
+                                <li class="mb-2"><a href="utilities-links.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Links</a></li>
+                                <li class="mb-2"><a href="utilities-object-fit.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Object Fit</a></li>
+                                <li class="mb-2"><a href="utilities-opacity.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Opacity</a></li>
+                                <li class="mb-2"><a href="utilities-overflow.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Overflow</a></li>
+                                <li class="mb-2"><a href="utilities-position.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Position</a></li>
+                                <li class="mb-2"><a href="utilities-shadows.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Shadows</a></li>
+                                <li class="mb-2"><a href="utilities-sizing.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Sizing</a></li>
+                                <li class="mb-2"><a href="utilities-spacing.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spacing</a></li>
+                                <li class="mb-2"><a href="utilities-text.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Text</a></li>
+                                <li class="mb-2"><a href="utilities-vertical-align.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Vertical Align</a></li>
+                                <li class="mb-2"><a href="utilities-visibility.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Visibility</a></li>
+                                <li class="mb-2"><a href="utilities-z-index.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Z-index</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Extend Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#extend" role="button" aria-expanded="false">
+                            Extend
+                        </a>
+                        <div class="collapse" id="extend">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="extend-icons.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Icons</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="content-area p-4 ml-30 col-12 col-lg-9">
+            <h1 class="text-accent text-center mb-4">BOOTSTRAP CHECKS & RADIOS</h1>
+            <hr class="border-secondary mb-5">
+            
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Checkboxes and Radio Buttons</h2>
+                <p class="mb-3">Checkboxes allow users to select multiple options from a set, while radio buttons allow selection of only one option from a group. Bootstrap provides enhanced styling and layout options for both using the <code>.form-check</code> class.</p>
+                
+                <div class="alert alert-primary p-3 border-0 rounded-3" style="background-color: rgba(124, 58, 237, 0.1); color: white;">
+                    <i class="fas fa-lightbulb me-2"></i><strong>Pro Tip:</strong> Use <code>.form-check</code> class for proper alignment and spacing of checkboxes and radio buttons. For inline layout, add <code>.form-check-inline</code>.
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Basic Checkboxes</h2>
+                
+                <div class="checks-demo">
+                    <h4 class="text-white">Default Checkboxes</h4>
+                    <div class="form-check">
+                        <input class="form-check-input form-check-input-custom" type="checkbox" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            Default checkbox
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input form-check-input-custom" type="checkbox" id="defaultCheck2" checked>
+                        <label class="form-check-label" for="defaultCheck2">
+                            Checked checkbox
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input form-check-input-custom" type="checkbox" id="disabledCheck" disabled>
+                        <label class="form-check-label" for="disabledCheck">
+                            Disabled checkbox
+                        </label>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;div class="form-check"&gt;
+  &lt;input class="form-check-input" type="checkbox" id="defaultCheck1"&gt;
+  &lt;label class="form-check-label" for="defaultCheck1"&gt;
+    Default checkbox
+  &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class="form-check"&gt;
+  &lt;input class="form-check-input" type="checkbox" id="defaultCheck2" checked&gt;
+  &lt;label class="form-check-label" for="defaultCheck2"&gt;
+    Checked checkbox
+  &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class="form-check"&gt;
+  &lt;input class="form-check-input" type="checkbox" id="disabledCheck" disabled&gt;
+  &lt;label class="form-check-label" for="disabledCheck"&gt;
+    Disabled checkbox
+  &lt;/label&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Basic Radio Buttons</h2>
+                
+                <div class="checks-demo">
+                    <h4 class="text-white">Default Radio Buttons</h4>
+                    <div class="form-check">
+                        <input class="form-check-input form-check-input-custom" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Default radio
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input form-check-input-custom" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Default checked radio
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input form-check-input-custom" type="radio" name="flexRadioDefault" id="flexRadioDisabled" disabled>
+                        <label class="form-check-label" for="flexRadioDisabled">
+                            Disabled radio
+                        </label>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;div class="form-check"&gt;
+  &lt;input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"&gt;
+  &lt;label class="form-check-label" for="flexRadioDefault1"&gt;
+    Default radio
+  &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class="form-check"&gt;
+  &lt;input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked&gt;
+  &lt;label class="form-check-label" for="flexRadioDefault2"&gt;
+    Default checked radio
+  &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class="form-check"&gt;
+  &lt;input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDisabled" disabled&gt;
+  &lt;label class="form-check-label" for="flexRadioDisabled"&gt;
+    Disabled radio
+  &lt;/label&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Inline Checkboxes and Radios</h2>
+                
+                <div class="checks-demo">
+                    <h4 class="text-white">Inline Layout</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Inline checkboxes:</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input form-check-input-custom" type="checkbox" id="inlineCheckbox1" value="option1">
+                            <label class="form-check-label" for="inlineCheckbox1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input form-check-input-custom" type="checkbox" id="inlineCheckbox2" value="option2">
+                            <label class="form-check-label" for="inlineCheckbox2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input form-check-input-custom" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+                            <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Inline radio buttons:</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input form-check-input-custom" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input form-check-input-custom" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input form-check-input-custom" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
+                            <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Inline Checkboxes --&gt;
+&lt;div class="form-check form-check-inline"&gt;
+  &lt;input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"&gt;
+  &lt;label class="form-check-label" for="inlineCheckbox1"&gt;1&lt;/label&gt;
+&lt;/div&gt;
+
+&lt;!-- Inline Radio Buttons --&gt;
+&lt;div class="form-check form-check-inline"&gt;
+  &lt;input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"&gt;
+  &lt;label class="form-check-label" for="inlineRadio1"&gt;1&lt;/label&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Without Labels</h2>
+                
+                <div class="checks-demo">
+                    <h4 class="text-white">Checkboxes and Radios without Labels</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Checkboxes without labels:</label>
+                        <div>
+                            <input class="form-check-input form-check-input-custom" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                            <input class="form-check-input form-check-input-custom" type="checkbox" id="checkboxNoLabel2" value="" aria-label="..." checked>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Radio buttons without labels:</label>
+                        <div>
+                            <input class="form-check-input form-check-input-custom" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="...">
+                            <input class="form-check-input form-check-input-custom" type="radio" name="radioNoLabel" id="radioNoLabel2" value="" aria-label="..." checked>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Checkbox without label --&gt;
+&lt;input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."&gt;
+
+&lt;!-- Radio without label --&gt;
+&lt;input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..."&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Toggle Buttons</h2>
+                
+                <div class="checks-demo">
+                    <h4 class="text-white">Checkbox and Radio Toggle Buttons</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Checkbox toggle buttons:</label>
+                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck1">Checkbox 1</label>
+
+                            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck2">Checkbox 2</label>
+
+                            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck3">Checkbox 3</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Radio toggle buttons:</label>
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;!-- Checkbox Toggle --&gt;
+&lt;div class="btn-group" role="group"&gt;
+  &lt;input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off"&gt;
+  &lt;label class="btn btn-outline-primary" for="btncheck1"&gt;Checkbox 1&lt;/label&gt;
+&lt;/div&gt;
+
+&lt;!-- Radio Toggle --&gt;
+&lt;div class="btn-group" role="group"&gt;
+  &lt;input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked&gt;
+  &lt;label class="btn btn-outline-primary" for="btnradio1"&gt;Radio 1&lt;/label&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Switches</h2>
+                
+                <div class="checks-demo">
+                    <h4 class="text-white">Toggle Switches</h4>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-input-custom" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-input-custom" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input form-check-input-custom" type="checkbox" role="switch" id="flexSwitchCheckDisabled" disabled>
+                        <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled switch checkbox input</label>
+                    </div>
+                </div>
+
+                <div class="code-example p-3 mt-4">
+                    <pre><code class="text-white">&lt;div class="form-check form-switch"&gt;
+  &lt;input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"&gt;
+  &lt;label class="form-check-label" for="flexSwitchCheckDefault"&gt;
+    Default switch checkbox input
+  &lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class="form-check form-switch"&gt;
+  &lt;input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked&gt;
+  &lt;label class="form-check-label" for="flexSwitchCheckChecked"&gt;
+    Checked switch checkbox input
+  &lt;/label&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+            
+            <div class="summary-box p-4 mt-5">
+                <h3 class="text-accent fs-4">Checks & Radios Best Practices</h3>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle me-2 text-success"></i> <strong>Clear Labels:</strong> Always provide descriptive labels for better accessibility.</li>
+                    <li><i class="bi bi-collection me-2 text-success"></i> <strong>Grouping:</strong> Use the same name attribute for radio buttons that belong to the same group.</li>
+                    <li><i class="bi bi-layout-text-sidebar me-2 text-success"></i> <strong>Layout:</strong> Use inline layout for short lists and stacked layout for longer lists.</li>
+                    <li><i class="bi bi-universal-access me-2 text-success"></i> <strong>Accessibility:</strong> Ensure proper labeling and use aria-label when no visible label is present.</li>
+                </ul>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="forms-select.html" class="btn btn-outline-primary">Previous: Form Select</a>
+                <a href="forms-range.html" class="btn btn-primary">Next: Range</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-5 pt-4" style="background-color: var(--bs-surface); color: var(--bs-body-color);">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 align-items-center mb-4 g-4">
+                
+                <div class="col text-center text-md-start">
+                    <div class="text-accent fw-bold fs-4">DevHub</div>
+                    <p class="text-muted mb-0">Learn • Code • Create</p>
+                </div>
+                
+                <div class="col text-center">
+                    <p class="mb-1">Created with ❤️ by <strong class="text-accent">Abhi Borude</strong></p>
+                    <p class="text-muted mb-0">&copy; 2024 DevHub Tutorials. All rights reserved.</p>
+                </div>
+                
+                <div class="col">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-3 border-top border-secondary-subtle">
+                <p class="text-muted mb-0">Made possible by HTML, CSS, and Bootstrap</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize Bootstrap components
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight active navigation item
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.aside-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active-topic');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

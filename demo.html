@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Tutorial - Complete Navigation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bs-body-bg: #0B1220;
+            --bs-body-color: #E6EEF3;
+            --bs-primary: #7C3AED; 
+            --bs-secondary: #06B6D4; 
+            --bs-success: #10B981;
+            --bs-danger: #EF4444;
+            --bs-surface: #0F1724; 
+            --bs-card: #111827;
+            --bs-code-bg: #071026;  
+            --bs-border-color: rgba(255,255,255,0.06);
+            --bs-box-shadow: 0 0.5rem 1rem rgba(2,6,23,0.6);
+            --bs-border-radius: 0.625rem; 
+        }
+
+        html{
+            scroll-padding-top: 90px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+            line-height: 1.6;
+        }
+
+        .btn-primary, .bg-primary, .text-primary { background-color: var(--bs-primary) !important; border-color: var(--bs-primary) !important; color: white !important; }
+        .text-accent { color: var(--bs-secondary) !important; }
+        
+        .tutorial-container {
+            min-height: 100vh;
+        }
+        
+        @media (min-width: 992px) {
+            .sidebar-fixed {
+                width: 250px;
+                height: calc(100vh - 70px); 
+                position: fixed;
+                top: 70px; 
+                overflow-y: auto;
+                background-color: var(--bs-card);
+                border-right: 1px solid var(--bs-border-color);
+            }
+            .content-area {
+                margin-left: 250px;
+            }
+        }
+        
+        .info-cont, .example-box, .utility-box {
+            background-color: var(--bs-card);
+            box-shadow: var(--bs-box-shadow);
+            border-radius: var(--bs-border-radius);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-cont:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(2, 6, 23, 0.8);
+        }
+
+        .info-cont { 
+            border-left: 4px solid var(--bs-primary); 
+        }
+        
+        .utility-box {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--bs-secondary);
+        }
+
+        .code-example, .code-editor, .output-box {
+            background-color: var(--bs-code-bg);
+            border-color: var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
+        }
+        
+        .utility-demo {
+            background-color: var(--bs-surface);
+            border-radius: var(--bs-border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .demo-item {
+            padding: 0.75rem;
+            margin: 0.5rem;
+            background-color: var(--bs-card);
+            border-radius: 0.375rem;
+            border: 1px solid var(--bs-border-color);
+        }
+        
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.375rem;
+            margin: 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .spacing-demo {
+            background-color: var(--bs-primary);
+            height: 20px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .border-demo {
+            width: 80px;
+            height: 80px;
+            margin: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bs-card);
+        }
+        
+        .utility-nav {
+            position: sticky;
+            top: 80px;
+            background: var(--bs-surface);
+            padding: 1rem;
+            border-radius: var(--bs-border-radius);
+            margin-bottom: 2rem;
+        }
+        
+        .utility-nav .nav-link {
+            color: var(--bs-body-color);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+        }
+        
+        .utility-nav .nav-link:hover,
+        .utility-nav .nav-link.active {
+            background-color: var(--bs-primary);
+            color: white;
+        }
+        
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .page-card {
+            background: var(--bs-card);
+            border-radius: var(--bs-border-radius);
+            padding: 1.5rem;
+            border: 1px solid var(--bs-border-color);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+        
+        .page-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--bs-primary);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .page-icon {
+            font-size: 2.5rem;
+            color: var(--bs-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .page-card h5 {
+            color: var(--bs-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-card p {
+            color: var(--bs-body-color);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body data-bs-theme="dark">
+    <header class="navbar navbar-expand-lg sticky-top shadow-lg p-3" style="background-color: var(--bs-surface);">
+        <div class="container-fluid">
+            <a class="navbar-brand text-accent fw-bold fs-4" href="index.html">DevHub</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user text-accent me-2 fs-5"></i>
+                    <button class="btn btn-primary btn-sm rounded-3 fw-bold">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="tutorial-container">
+        <aside class="d-none d-lg-block p-4 sidebar-fixed" style="background-color: var(--bs-card);">
+            <div>
+                <h3 class="text-accent text-center mb-4">BOOTSTRAP TUTORIAL</h3>
+                <hr class="border-secondary">
+                <ul class="list-unstyled"> 
+                    <!-- Getting Started Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#gettingStarted" role="button" aria-expanded="true">
+                            Getting Started
+                        </a>
+                        <div class="collapse show" id="gettingStarted">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="introduction.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Introduction</a></li>
+                                <li class="mb-2"><a href="installation.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Installation</a></li>
+                                <li class="mb-2"><a href="quick-start.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Quick Start</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Layout Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#layout" role="button" aria-expanded="false">
+                            Layout
+                        </a>
+                        <div class="collapse" id="layout">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="layout-breakpoints.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breakpoints</a></li>
+                                <li class="mb-2"><a href="layout-containers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Containers</a></li>
+                                <li class="mb-2"><a href="layout-grid.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Grid System</a></li>
+                                <li class="mb-2"><a href="layout-columns.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Columns</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Content Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#content" role="button" aria-expanded="false">
+                            Content
+                        </a>
+                        <div class="collapse" id="content">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="content-typography.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Typography</a></li>
+                                <li class="mb-2"><a href="content-images.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Images</a></li>
+                                <li class="mb-2"><a href="content-tables.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tables</a></li>
+                                <li class="mb-2"><a href="content-figures.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Figures</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Forms Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#forms" role="button" aria-expanded="false">
+                            Forms
+                        </a>
+                        <div class="collapse" id="forms">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="forms-overview.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Form Overview</a></li>
+                                <li class="mb-2"><a href="forms-controls.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Form Controls</a></li>
+                                <li class="mb-2"><a href="forms-select.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Select</a></li>
+                                <li class="mb-2"><a href="forms-checks-radios.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Checks & Radios</a></li>
+                                <li class="mb-2"><a href="forms-layout.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Form Layout</a></li>
+                                <li class="mb-2"><a href="forms-validation.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Validation</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Components Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#components" role="button" aria-expanded="false">
+                            Components
+                        </a>
+                        <div class="collapse" id="components">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="components-accordion.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Accordion</a></li>
+                                <li class="mb-2"><a href="components-alerts.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Alerts</a></li>
+                                <li class="mb-2"><a href="components-badges.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Badges</a></li>
+                                <li class="mb-2"><a href="components-breadcrumb.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Breadcrumb</a></li>
+                                <li class="mb-2"><a href="components-buttons.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Buttons</a></li>
+                                <li class="mb-2"><a href="components-cards.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Cards</a></li>
+                                <li class="mb-2"><a href="components-carousel.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Carousel</a></li>
+                                <li class="mb-2"><a href="components-dropdowns.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Dropdowns</a></li>
+                                <li class="mb-2"><a href="components-list-group.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">List Group</a></li>
+                                <li class="mb-2"><a href="components-modal.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Modal</a></li>
+                                <li class="mb-2"><a href="components-navbar.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Navbar</a></li>
+                                <li class="mb-2"><a href="components-pagination.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Pagination</a></li>
+                                <li class="mb-2"><a href="components-popovers.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Popovers</a></li>
+                                <li class="mb-2"><a href="components-progress.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Progress</a></li>
+                                <li class="mb-2"><a href="components-scrollspy.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Scrollspy</a></li>
+                                <li class="mb-2"><a href="components-spinners.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spinners</a></li>
+                                <li class="mb-2"><a href="components-toasts.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Toasts</a></li>
+                                <li class="mb-2"><a href="components-tooltips.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Tooltips</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Utilities Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle active-topic" data-bs-toggle="collapse" href="#utilities" role="button" aria-expanded="true">
+                            Utilities
+                        </a>
+                        <div class="collapse show" id="utilities">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="utilities-all.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3 active-topic">All Utilities</a></li>
+                                <li class="mb-2"><a href="utilities-background.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Background</a></li>
+                                <li class="mb-2"><a href="utilities-borders.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Borders</a></li>
+                                <li class="mb-2"><a href="utilities-colors.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Colors</a></li>
+                                <li class="mb-2"><a href="utilities-display.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Display</a></li>
+                                <li class="mb-2"><a href="utilities-flex.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Flex</a></li>
+                                <li class="mb-2"><a href="utilities-spacing.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Spacing</a></li>
+                                <li class="mb-2"><a href="utilities-text.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Text</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <!-- Helpers Section -->
+                    <li class="mb-2">
+                        <a class="aside-link text-white text-decoration-none d-block p-2 rounded-3 dropdown-toggle" data-bs-toggle="collapse" href="#helpers" role="button" aria-expanded="false">
+                            Helpers
+                        </a>
+                        <div class="collapse" id="helpers">
+                            <ul class="list-unstyled ms-3 mt-2">
+                                <li class="mb-2"><a href="helpers-clearfix.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Clearfix</a></li>
+                                <li class="mb-2"><a href="helpers-color.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Color</a></li>
+                                <li class="mb-2"><a href="helpers-ratio.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Ratio</a></li>
+                                <li class="mb-2"><a href="helpers-position.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Position</a></li>
+                                <li class="mb-2"><a href="helpers-stack.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Stack</a></li>
+                                <li class="mb-2"><a href="helpers-visually.html" class="aside-link text-white text-decoration-none d-block p-2 rounded-3">Visually Hidden</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="content-area p-4 ml-30 col-12 col-lg-9">
+            <h1 class="text-accent text-center mb-4">BOOTSTRAP TUTORIAL - COMPLETE GUIDE</h1>
+            <hr class="border-secondary mb-5">
+            
+            <div class="info-cont p-4 mb-4">
+                <h2 class="text-accent fs-3">▶ Welcome to Bootstrap Tutorial</h2>
+                <p class="mb-3">This comprehensive tutorial covers everything you need to know about Bootstrap 5.3. Learn how to build responsive, mobile-first websites with the world's most popular front-end framework.</p>
+                
+                <div class="alert alert-primary p-3 border-0 rounded-3" style="background-color: rgba(124, 58, 237, 0.1); color: white;">
+                    <i class="fas fa-lightbulb me-2"></i><strong>Getting Started:</strong> Begin with the Introduction page and follow the logical progression through layout, content, forms, components, and utilities.
+                </div>
+            </div>
+
+            <!-- Quick Navigation Cards -->
+            <h3 class="text-accent mb-4">📚 Tutorial Sections</h3>
+            <div class="page-grid">
+                <!-- Getting Started -->
+                <a href="introduction.html" class="page-card">
+                    <div class="page-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <h5>Getting Started</h5>
+                    <p>Introduction, installation, and quick start guide for Bootstrap 5.3</p>
+                    <small class="text-muted">3 pages</small>
+                </a>
+
+                <!-- Layout -->
+                <a href="layout-breakpoints.html" class="page-card">
+                    <div class="page-icon">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                    <h5>Layout</h5>
+                    <p>Breakpoints, containers, grid system, and responsive layout techniques</p>
+                    <small class="text-muted">4 pages</small>
+                </a>
+
+                <!-- Content -->
+                <a href="content-typography.html" class="page-card">
+                    <div class="page-icon">
+                        <i class="fas fa-text-height"></i>
+                    </div>
+                    <h5>Content</h5>
+                    <p>Typography, images, tables, figures, and content styling</p>
+                    <small class="text-muted">4 pages</small>
+                </a>
+
+                <!-- Forms -->
+                <a href="forms-overview.html" class="page-card">
+                    <div class="page-icon">
+                        <i class="fas fa-wpforms"></i>
+                    </div>
+                    <h5>Forms</h5>
+                    <p>Form controls, layout, validation, and interactive form elements</p>
+                    <small class="text-muted">6 pages</small>
+                </a>
+
+                <!-- Components -->
+                <a href="components-accordion.html" class="page-card">
+                    <div class="page-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h5>Components</h5>
+                    <p>All Bootstrap components from accordions to tooltips</p>
+                    <small class="text-muted">18 pages</small>
+                </a>
+
+                <!-- Utilities -->
+                <a href="utilities-all.html" class="page-card">
+                    <div class="page-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h5>Utilities</h5>
+                    <p>Helper classes for spacing, colors, display, positioning, and more</p>
+                    <small class="text-muted">8 pages</small>
+                </a>
+
+                <!-- Helpers -->
+                <a href="helpers-clearfix.html" class="page-card">
+                    <div class="page-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h5>Helpers</h5>
+                    <p>Additional helper classes and utilities for common tasks</p>
+                    <small class="text-muted">6 pages</small>
+                </a>
+            </div>
+
+            <!-- Recent Pages -->
+            <div class="info-cont p-4 mt-5">
+                <h3 class="text-accent mb-4">🚀 Quick Access - Recent Pages</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <a href="components-buttons.html" class="page-card">
+                            <h6><i class="fas fa-mouse-pointer me-2"></i>Buttons</h6>
+                            <p class="mb-0">Button styles, sizes, states, and button groups</p>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="components-cards.html" class="page-card">
+                            <h6><i class="far fa-id-card me-2"></i>Cards</h6>
+                            <p class="mb-0">Flexible content containers with multiple variants</p>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="components-modal.html" class="page-card">
+                            <h6><i class="far fa-window-restore me-2"></i>Modals</h6>
+                            <p class="mb-0">Dialog boxes/popup windows for user interactions</p>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="forms-validation.html" class="page-card">
+                            <h6><i class="fas fa-check-circle me-2"></i>Form Validation</h6>
+                            <p class="mb-0">Client-side and server-side form validation</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Help -->
+            <div class="utility-box mt-5">
+                <h3 class="text-accent mb-3">🧭 Navigation Guide</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="text-white">Sidebar Navigation</h5>
+                        <ul class="text-muted">
+                            <li>Use the left sidebar to browse all tutorial sections</li>
+                            <li>Click dropdown arrows to expand/collapse sections</li>
+                            <li>Active pages are highlighted in purple</li>
+                            <li>All pages maintain consistent navigation</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="text-white">Page Navigation</h5>
+                        <ul class="text-muted">
+                            <li>Each page has Previous/Next buttons at the bottom</li>
+                            <li>Use Quick Access cards for popular pages</li>
+                            <li>All pages link back to this overview</li>
+                            <li>Search functionality coming soon</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="d-flex justify-content-between mt-5 pt-4 border-top border-secondary">
+                <a href="#" class="btn btn-outline-primary disabled">
+                    <i class="fas fa-arrow-left me-2"></i>Previous
+                </a>
+                <a href="introduction.html" class="btn btn-primary">
+                    Start Tutorial <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-5 pt-4" style="background-color: var(--bs-surface); color: var(--bs-body-color);">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 align-items-center mb-4 g-4">
+                
+                <div class="col text-center text-md-start">
+                    <div class="text-accent fw-bold fs-4">DevHub</div>
+                    <p class="text-muted mb-0">Learn • Code • Create</p>
+                </div>
+                
+                <div class="col text-center">
+                    <p class="mb-1">Created with ❤️ by <strong class="text-accent">Abhi Borude</strong></p>
+                    <p class="text-muted mb-0">&copy; 2024 DevHub Tutorials. All rights reserved.</p>
+                </div>
+                
+                <div class="col">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm text-white rounded-circle shadow" style="background-color: var(--bs-card); border: 1px solid var(--bs-border-color);">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-3 border-top border-secondary-subtle">
+                <p class="text-muted mb-0">Made possible by HTML, CSS, and Bootstrap</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize all Bootstrap components
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize tooltips
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+            
+            // Highlight active navigation based on current page
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.aside-link');
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
+                    link.classList.add('active-topic');
+                    // Expand parent dropdown if collapsed
+                    const parentCollapse = link.closest('.collapse');
+                    if (parentCollapse) {
+                        parentCollapse.classList.add('show');
+                    }
+                }
+            });
+            
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
